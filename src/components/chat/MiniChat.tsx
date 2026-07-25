@@ -4,12 +4,16 @@ import { ChatList } from "./ChatList";
 
 export function MiniChat() {
 
-    const [messages, setMessages] = useState([]);
+   const [messages, setMessages] = useState<string[]>([]);   
+
+   function getMessage(message: string) {
+      setMessages([...messages, message]);
+   }
 
     return (
         <div className="h-[400px] w-[300px] bg-white p-3 rounded-lg flex justify-between flex-col">
-            <ChatList />
-            <ChatInput />
+            <ChatList messages={messages} />
+            <ChatInput getMessage={getMessage} />
         </div>
     )
 }

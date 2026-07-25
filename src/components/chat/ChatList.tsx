@@ -1,10 +1,12 @@
-import { Message } from "./Message";
+import { InstructionMessage } from "./InstructionMessage";
 
 
-export function ChatList() {
+export function ChatList({ messages }: { messages: string[] }) {
     return (
         <div className="flex-1 overflow-y-auto">
-            <Message />
+            {messages.length === 0 && (
+                <InstructionMessage />
+            )}
         </div>
     )
 }

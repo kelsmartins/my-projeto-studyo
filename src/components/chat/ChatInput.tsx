@@ -1,9 +1,20 @@
 import { Paperclip, Send } from "lucide-react";
 import { useState } from "react";
 
-export default function ChatInput() {
+type ChatInputProps = {
+    getMessage: (message: string) => void;
+};
+
+export default function ChatInput({ getMessage }: ChatInputProps) {
 
     const [text, setText] = useState("");
+    
+    function handleSendMessage() {
+        if (text.trim() !== "") {
+            getMessage(text);
+            setText("");
+        }
+    }
 
     return (
         <div className="border rounded-xl p-3 bg-gray-200">
@@ -24,7 +35,8 @@ export default function ChatInput() {
                 </label>
 
 
-                <button className="flex items-center gap-2 bg-[#0033ff] text-white rounded-lg px-3 py-2 hover:bg-blue-700 active:bg-gray-800 transition-colors text-xs font-bold">
+                <button className="flex items-center gap-2 bg-[#0033ff] text-white rounded-lg px-3 py-2 hover:bg-blue-700 active:bg-gray-800 transition-colors text-xs font-bold"
+                    onClick={handleSendMessage}>
                     <Send size={14} />
                     Enviar
                 </button>
