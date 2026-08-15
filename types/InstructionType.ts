@@ -1,4 +1,4 @@
-export type InstructionType = {
+export interface InstructionInterface {
     message: string;
     files?: File[];
 };
