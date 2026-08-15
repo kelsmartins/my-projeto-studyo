@@ -1,7 +1,17 @@
+import { StudyCard } from "@/src/components/studycard/StudyCard";
+
+
 export default function Board() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24 bg-[#F4F2EC]">
+    <div className="flex flex-col justify-between min-h-screen bg-[#E3DDCE]">
 
+        <div className="w-full h-14 bg-red-500">
+
+        </div>
+
+        <div className="flex-1 p-4">
+            <StudyCard />
+        </div>
     </div>
   );
 }
