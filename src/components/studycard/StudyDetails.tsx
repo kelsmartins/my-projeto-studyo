@@ -1,0 +1,24 @@
+import { StudySource } from "./StudySource";
+
+type StudyDetailsProps = {
+    handleShowDetails: () => void;
+};
+
+export function StudyDetails({ handleShowDetails }: StudyDetailsProps) {
+
+
+    return (
+        <div className="w-screen h-screen backdrop-blur-xs absolute top-0 left-0 flex justify-center items-center"
+        onClick={handleShowDetails}>
+            <div className="w-100 min-h-120 bg-[#E3DDCE] rounded-xl shadow-lg flex flex-col overflow-hidden" onClick={(e) => e.stopPropagation()}>
+
+                <div className="w-full h-4 bg-[#ff0000] rounded-t-xl"></div>
+
+                <ul className="flex-1 p-4 overflow-y-auto">
+                    <StudySource />
+                </ul>
+
+            </div>  
+        </div>
+    )
+}
