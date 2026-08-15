@@ -1,9 +1,11 @@
+'use client';
 import { StudyCard } from "@/src/components/studycard/StudyCard";
+import { StudyDetails } from "@/src/components/studycard/StudyDetails";
 
 
 export default function Board() {
   return (
-    <div className="flex flex-col justify-between min-h-screen bg-[#E3DDCE]">
+    <div className="flex flex-col justify-between min-h-screen bg-[#D3CDBE]">
 
         <div className="w-full h-14 bg-red-500">
 
