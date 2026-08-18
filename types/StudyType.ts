@@ -11,6 +11,6 @@ export interface StudyType {
     date: Date,
     materials: MaterialType[]
     color_name: string;  
-  color: string; 
+    color_hex: string; 
     
 }
