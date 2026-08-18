@@ -1,3 +1,5 @@
+import { File } from "lucide-react";
+
 type FilesListProps = {
     selectedFiles: File[];
 };
@@ -16,8 +18,9 @@ export function FilesList({ selectedFiles }: FilesListProps) {
 
 export function FileItem({ file }: { file: File }) {
     return (
-        <li className="flex items-center justify-center w-10 h-full px-3 py-2 bg-red-200 rounded-xl w-20">
-            <span className="text-[#292524]/70 text-xs truncate">{file.name}</span>
+        <li className="flex w-22 h-full px-2 py-2 bg-[#292524]/40 rounded-xl w-20 flex items-center justify-between gap-1">
+            <File size={13} className="text-[#000]/60 size-24"/>
+            <span className="text-[#000]/70 font-bold text-xs truncate">{file.name}</span>
         </li>
     )
 }
