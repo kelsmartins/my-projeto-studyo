@@ -1,15 +1,14 @@
 'use client'
 import { axios_api } from "@/src/api/axios_api";
+import { ParsedStudyType } from "@/types/ParsedStudyType";
 import { MaterialType, StudyType } from "@/types/StudyType";
-import { UUID } from "crypto";
-import { FreshnessPolicy } from "next/dist/client/components/router-reducer/ppr-navigations";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 type StudyContextType = {
     studies: StudyType[]
     addStudy: (newStudy: StudyType) => void;
     handleParsedStudy: (text:string, files: MaterialType[]) => void;
-    parsedStudy: StudyType | null | undefined;
+    parsedStudy: ParsedStudyType | null | undefined;
 }
 
 export const StudyContext = createContext({} as StudyContextType)
@@ -17,7 +16,7 @@ export const StudyContext = createContext({} as StudyContextType)
 export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     const [studies, setStudies] = useState<StudyType[]>([])
-    const [parsedStudy, setParsedStudy] = useState<StudyType | null>();
+    const [parsedStudy, setParsedStudy] = useState<ParsedStudyType>();
 
 
     async function getStudies() {
@@ -42,7 +41,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         })
 
         let resp = await axios_api.post('/parse_study', formdata)
-        setParsedStudy(resp.data as StudyType);
+        setParsedStudy(resp.data as ParsedStudyType);
     }
 
     return (
