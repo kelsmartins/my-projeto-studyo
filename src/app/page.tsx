@@ -1,5 +1,4 @@
 'use client'
-import { FakeChat } from "../components/chat/FakeChat";
 
 
 export default function Home() {
