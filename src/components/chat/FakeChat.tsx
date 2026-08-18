@@ -5,6 +5,7 @@ import { FilesList } from "./FilesList";
 import { useState } from "react";
 import { useStudyContext } from "@/contexts/StudyContext";
 import { MessageBubble } from "./MessageBubble";
+import { ErrorMessageBubble } from "./ErrorMessageBubble copy";
 
 type FakeChatProps = {
     handleShowFakeChat: ()=> void;
@@ -48,9 +49,10 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
 
             <div className="w-100 max-h-80 flex flex-col">
                 <ul className="flex-1 flex items-center justify-center mb-5">
-
-                <MessageBubble studyData={parsedStudy}/>
-
+    
+                    {parsedStudy != undefined && parsedStudy.message == null && <MessageBubble studyData={parsedStudy}/> } 
+                    {parsedStudy?.message && <ErrorMessageBubble studyData={parsedStudy}/>}
+            
                 </ul>
 
                 <FilesList  selectedFiles={selectedFiles} />
