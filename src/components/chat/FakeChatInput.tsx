@@ -1,4 +1,4 @@
-import { MaterialType } from "@/types/StudyType";
+import { MaterialType } from "@/src/types/StudyType";
 import { Paperclip, Send } from "lucide-react";
 
 type FakeChatInputProps = {

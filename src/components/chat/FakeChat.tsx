@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { FakeChatInput } from "./FakeChatInput";
 import { FilesList } from "./FilesList";
 import { useState } from "react";
-import { useStudyContext } from "@/contexts/StudyContext";
+import { useStudyContext } from "@/src/contexts/StudyContext";
 import { MessageBubble } from "./MessageBubble";
 import { ErrorMessageBubble } from "./ErrorMessageBubble copy";
 

@@ -1,4 +1,4 @@
-import { ParsedStudyType } from "@/types/ParsedStudyType";
+import { ParsedStudyType } from "@/src/types/ParsedStudyType";
 
 type ErrorMessageBubbleProps = {
   studyData: ParsedStudyType | null | undefined;
