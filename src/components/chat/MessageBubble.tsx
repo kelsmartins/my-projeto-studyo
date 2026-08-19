@@ -1,11 +1,21 @@
-import { StudyType } from "@/types/StudyType";
+import { useStudyContext } from "@/src/contexts/StudyContext";
+import { ParsedStudyType } from "@/src/types/ParsedStudyType";
 import {X, Check} from 'lucide-react'
 
 type MessageBubbleProps = {
-  studyData: StudyType | null | undefined;
+  studyData: ParsedStudyType | null | undefined;
 }
 
 export function MessageBubble({ studyData }: MessageBubbleProps) {
+
+  const {addStudy} = useStudyContext();
+
+  function handleAddStudy(){
+    if(studyData){
+      addStudy(studyData);
+    }
+  }
+
   return (
     <div
       className="bg-[#E3DDCE] p-4 rounded-xl mb-2 max-w-[400px] shadow-sm flex flex-col">
@@ -39,7 +49,8 @@ export function MessageBubble({ studyData }: MessageBubbleProps) {
           descartar
         </button>
 
-        <button className="px-3 py-2 bg-[#292524] rounded-lg font-semibold text-white flex">
+        <button className="px-3 py-2 bg-[#292524] rounded-lg font-semibold text-white flex"
+        onClick={handleAddStudy}>
           <Check size={16} className="text-white" />
           criar
         </button>
