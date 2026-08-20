@@ -5,7 +5,7 @@ import { FilesList } from "./FilesList";
 import { useState } from "react";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { MessageBubble } from "./MessageBubble";
-import { ErrorMessageBubble } from "./ErrorMessageBubble copy";
+import { ErrorMessageBubble } from "./ErrorMessageBubble";
 
 type FakeChatProps = {
     handleShowFakeChat: ()=> void;
