@@ -1,8 +1,12 @@
+import { MaterialType, StudyType } from "@/src/types/StudyType";
+import { Link } from "lucide-react";
+
 type StudyDetailsProps = {
     handleShowDetails: () => void;
+    studyData:  StudyType;
 };
 
-export function StudyDetails({ handleShowDetails }: StudyDetailsProps) {
+export function StudyDetails({ handleShowDetails, studyData }: StudyDetailsProps) {
 
 
     return (
@@ -13,7 +17,9 @@ export function StudyDetails({ handleShowDetails }: StudyDetailsProps) {
                 <div className="w-full h-4 bg-[#ff0000] rounded-t-xl"></div>
 
                 <ul className="flex-1 p-4 overflow-y-auto">
-                    <StudySource />
+                    {studyData.material?.map((material, index) => 
+                        <StudySource key={index} material={material}/>
+                    )}
                 </ul>
 
             </div>  
@@ -22,13 +28,15 @@ export function StudyDetails({ handleShowDetails }: StudyDetailsProps) {
 }
 
 
-import { Link } from "lucide-react";
 
-export function StudySource() {
+type studySourceType = {
+    material: MaterialType
+}
+export function StudySource({material}: studySourceType) {
     return (
         <div className="size-24 bg-[#D3CDBE] rounded-xl flex flex-col justify-center p-4 overflow-hidden">
             <Link className="text-[#ff0000] size-6 mx-auto" />
-            <span className="text-[#ff0000] text-xs truncate mt-1 break-words font-bold">atividade bla bla nao sei</span>
+            <span className="text-[#ff0000] text-xs truncate mt-1 break-words font-bold">{material.name}</span>
         </div>
     )
 }
