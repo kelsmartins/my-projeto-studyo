@@ -8,12 +8,17 @@ type MessageBubbleProps = {
 
 export function MessageBubble({ studyData }: MessageBubbleProps) {
 
-  const {addStudy} = useStudyContext();
+  const {addStudy, discardParsedStudy} = useStudyContext();
 
   function handleAddStudy(){
     if(studyData){
       addStudy(studyData);
     }
+  }
+
+  function handleDiscardParsedStudy(){
+    discardParsedStudy();
+
   }
 
   return (
@@ -43,7 +48,7 @@ export function MessageBubble({ studyData }: MessageBubbleProps) {
 
         <button className="font-bold hover:underline hover:cursor-pointer flex"
 
-          onClick={() => { }}>
+          onClick={handleDiscardParsedStudy}>
 
           <X size={16} className="text-[#292524]" />
           descartar
