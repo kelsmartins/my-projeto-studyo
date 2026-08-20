@@ -23,20 +23,23 @@ export function StudyCard({studyData}: StudyCardProps){
 
                 <div className="w-full h-full flex flex-col">
                     <h2 className="text-[#292524] font-bold mb-1 text-md max-h-9 overflow-hidden tracking-tighter leading-none">{studyData.title}</h2>
-                    <h3 className="text-[#ff0000] text-xs font-bold" style={{backgroundColor: studyData.color_hex}}>{studyData.date.toDateString()}</h3>
+                    <h3 className="text-[#ff0000] text-xs font-bold" style={{backgroundColor: studyData.color_hex}}>{new Date(studyData.date).toLocaleDateString('pt-BR')}</h3>
                 </div>
 
-                <div className="w-full h-10 flex items-center justify-between text-xs text-[#292524]">
+                <div className="w-full h-10 flex items-center justify-between text-xs text-[#292524] gap-2">
                     <button className="font-bold hover:underline hover:cursor-pointer"
                     onClick={handleShowDetails}>
                         ver mais
                     </button>
-                    <button className="px-3 py-2 bg-[#ff0000] rounded-lg font-semibold text-white">concluir</button>
+                    <button className="px-3 py-2 rounded-lg font-semibold text-white" 
+                    style={{backgroundColor: studyData.color_hex ? studyData.color_hex : '#292524' }}>
+                        concluir
+                    </button>
                 </div>
 
             </div>
 
-            {showDetails && <StudyDetails handleShowDetails={handleShowDetails} />}
+            {showDetails && <StudyDetails handleShowDetails={handleShowDetails} studyData={studyData}/>}
         
         </div>
     )
