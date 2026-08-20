@@ -7,8 +7,9 @@ import { createContext, ReactNode, useContext, useState } from "react";
 type StudyContextType = {
     studies: StudyType[]
     addStudy: (newParsedStudy: ParsedStudyType) => void;
-    handleParsedStudy: (text:string, files: MaterialType[]) => void;
+    handleParsedStudy: (text: string, files: MaterialType[]) => void;
     parsedStudy: ParsedStudyType | null | undefined;
+    discardParsedStudy: () => void;
 }
 
 export const StudyContext = createContext({} as StudyContextType)
@@ -40,36 +41,39 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             setStudies([...studies, resp.data])
             setParsedStudy(undefined)
         } catch (error) {
-            
+
         }
 
-    
+
     }
 
-    async function handleParsedStudy(text:string, files: MaterialType[]) {
+    async function handleParsedStudy(text: string, files: MaterialType[]) {
 
-        let formdata = new FormData();
+        // coletar nomes
+        const fileNames = files.map(file => file.name)
 
-        formdata.append('text', text)
+        // criar pacote a ser enviado
+        const payload = {
+            text: text,
+            fileNames: fileNames
+        }
 
-        files.forEach((file, index)=>{
-           if (file instanceof File) {
-            formdata.append(`file_${index}`, file);
-  }
-        })
-
-        let resp = await axios_api.post('/parse_study', formdata)
+        let resp = await axios_api.post('/parse_study', payload)
         setParsedStudy(resp.data as ParsedStudyType);
     }
 
+    function discardParsedStudy(){
+        setParsedStudy(undefined)
+    }
+
     return (
-        <StudyContext.Provider value={{ studies, addStudy, handleParsedStudy, parsedStudy }}>
+        <StudyContext.Provider value={{ studies, addStudy, handleParsedStudy, parsedStudy, discardParsedStudy }}>
             {children}
         </StudyContext.Provider>
     )
 }
 
-export function useStudyContext(){
+export function useStudyContext() {
     let context = useContext(StudyContext)
     return context
 }
