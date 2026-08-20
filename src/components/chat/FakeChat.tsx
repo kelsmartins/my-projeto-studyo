@@ -13,6 +13,8 @@ type FakeChatProps = {
 
 export function FakeChat({handleShowFakeChat} : FakeChatProps) {
 
+    const {getCurrentSelectedMaterial} = useStudyContext();
+
     const [message, setMessage] = useState("");
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -21,10 +23,9 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
     const {handleParsedStudy} = useStudyContext();
 
     function handleAddFiles(newFiles: FileList) {
-        for (let i = 0; i < newFiles.length; i++) {
-            const newFile = newFiles[i];
-            setSelectedFiles([...selectedFiles, newFile]);
-        }
+        const files = [...selectedFiles, ...Array.from(newFiles)];
+        setSelectedFiles(files);
+        getCurrentSelectedMaterial(files);
     }
 
     function handleParse(){
@@ -50,7 +51,7 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
             <div className="w-100 max-h-80 flex flex-col">
                 <ul className="flex-1 flex items-center justify-center mb-5">
     
-                    {parsedStudy != undefined && parsedStudy.message == null && <MessageBubble studyData={parsedStudy}/> } 
+                    {parsedStudy != undefined && parsedStudy.message == null && parsedStudy != undefined && <MessageBubble studyData={parsedStudy}/> } 
                     {parsedStudy?.message && <ErrorMessageBubble studyData={parsedStudy}/>}
             
                 </ul>
