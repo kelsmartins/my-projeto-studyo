@@ -3,14 +3,18 @@ import { FakeChat } from "@/src/components/chat/FakeChat";
 import { StudyCard } from "@/src/components/studycard/StudyCard";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { PlusCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Board() {
 
   const [showFakeChat, setShowFakeChat] = useState(false);
 
-  const {studies} = useStudyContext()
+  const {getStudies, studies} = useStudyContext()
+
+  useEffect(()=>{
+    getStudies()
+  }, [])
 
   function handleShowFakeChat(){
     setShowFakeChat(!showFakeChat)
