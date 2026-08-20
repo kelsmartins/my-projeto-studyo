@@ -43,8 +43,8 @@ export default function Board() {
         </div>
 
         <ul className="flex-1 p-4">
-            {studies.map(study => (
-              <StudyCard key={study.id} studyData={study}/>
+            {studies.map((study, index) => (
+              <StudyCard key={index} studyData={study}/>
             )) }
         </ul>
     </div>
