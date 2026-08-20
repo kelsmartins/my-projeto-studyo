@@ -6,6 +6,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 
 type StudyContextType = {
     studies: StudyType[]
+    getStudies: () => void;
     addStudy: (newParsedStudy: ParsedStudyType) => void;
     handleParsedStudy: (text: string, files: MaterialType[]) => void;
     parsedStudy: ParsedStudyType | null | undefined;
@@ -67,7 +68,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <StudyContext.Provider value={{ studies, addStudy, handleParsedStudy, parsedStudy, discardParsedStudy }}>
+        <StudyContext.Provider value={{ studies, getStudies, addStudy, handleParsedStudy, parsedStudy, discardParsedStudy }}>
             {children}
         </StudyContext.Provider>
     )
