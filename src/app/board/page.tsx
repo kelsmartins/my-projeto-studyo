@@ -1,6 +1,7 @@
 'use client';
 import { FakeChat } from "@/src/components/chat/FakeChat";
 import { StudyCard } from "@/src/components/studycard/StudyCard";
+import { useStudyContext } from "@/src/contexts/StudyContext";
 import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 
@@ -8,6 +9,8 @@ import { useState } from "react";
 export default function Board() {
 
   const [showFakeChat, setShowFakeChat] = useState(false);
+
+  const {studies} = useStudyContext()
 
   function handleShowFakeChat(){
     setShowFakeChat(!showFakeChat)
@@ -36,7 +39,9 @@ export default function Board() {
         </div>
 
         <ul className="flex-1 p-4">
-            <StudyCard />
+            {studies.map(study => (
+              <StudyCard key={study.id} studyData={study}/>
+            )) }
         </ul>
     </div>
   );
