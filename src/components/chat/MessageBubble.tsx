@@ -30,12 +30,12 @@ export function MessageBubble({ studyData }: MessageBubbleProps) {
       </h4>
 
       <p className="m-0 mt-0 mb-1 text-sm font-bold text-[#292524]/80"
-      style={{ color: studyData?.color_hex}}>{studyData?.date instanceof Date ? studyData.date.toLocaleDateString() : studyData?.date}</p>
+      style={{ color: studyData?.color_hex}}>{studyData?.date ? studyData.date : studyData?.date}</p>
 
       <p className="m-0 mt-0 mb-1 text-sm font-bold text-[#292524]/80">Materiais:</p>
-      {studyData?.materials && studyData.materials.length > 0 && (
+      {studyData?.material && studyData.material.length > 0 && (
         <ul className=" m-0 mb-4">
-          {studyData.materials.map((m, i) => (
+          {studyData.material.map((m, i) => (
             <li key={i}
               className="italic text-[#292524]/70 text-sm truncate">
               {m.type === "file" ? "📄 Arquivo:" : "🔗 Link:"} {m.name}
