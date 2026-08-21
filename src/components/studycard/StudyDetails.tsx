@@ -14,11 +14,11 @@ export function StudyDetails({ handleShowDetails, studyData }: StudyDetailsProps
         onClick={handleShowDetails}>
             <div className="w-100 min-h-120 bg-[#E3DDCE] rounded-xl shadow-lg flex flex-col overflow-hidden" onClick={(e) => e.stopPropagation()}>
 
-                <div className="w-full h-4 bg-[#ff0000] rounded-t-xl"></div>
+                <div className="w-full h-4 rounded-t-xl" style={{backgroundColor: studyData.color_hex ? studyData.color_hex : '#292524' }}></div>
 
                 <ul className="flex-1 p-4 overflow-y-auto">
                     {studyData.material?.map((material, index) => 
-                        <StudySource key={index} material={material}/>
+                        <StudySource key={index} material={material} borderColor={studyData.color_hex}/>
                     )}
                 </ul>
 
@@ -30,13 +30,14 @@ export function StudyDetails({ handleShowDetails, studyData }: StudyDetailsProps
 
 
 type studySourceType = {
-    material: MaterialType
+    material: MaterialType;
+    borderColor: string
 }
-export function StudySource({material}: studySourceType) {
+export function StudySource({material, borderColor}: studySourceType) {
     return (
-        <div className="size-24 bg-[#D3CDBE] rounded-xl flex flex-col justify-center p-4 overflow-hidden">
-            <Link className="text-[#ff0000] size-6 mx-auto" />
-            <span className="text-[#ff0000] text-xs truncate mt-1 break-words font-bold">{material.name}</span>
+        <div className="size-24 bg-[#D3CDBE] rounded-xl flex flex-col justify-center p-4 overflow-hidden" style={{ border: `1px solid ${borderColor ? borderColor : '#292524'}` }}>
+            <Link className="size-6 mx-auto" style={{color: borderColor ? borderColor : '#292524' }} />
+            <span className="text-xs truncate mt-1 break-words font-bold" style={{color: borderColor ? borderColor : '#292524' }}>{material.name}</span>
         </div>
     )
 }
