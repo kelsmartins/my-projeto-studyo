@@ -56,7 +56,7 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
             
                 </ul>
 
-                <FilesList  selectedFiles={selectedFiles} />
+                <FilesList  material={selectedFiles} />
                 <FakeChatInput handleAddFiles={handleAddFiles} selectedFiles={selectedFiles} setMessage={setMessage} handleParse={handleParse} />
 
             </div>  
