@@ -1,7 +1,7 @@
 'use client'
 import { axios_api } from "@/src/api/axios_api";
 import { ParsedStudyType } from "@/src/types/ParsedStudyType";
-import { StudyType } from "@/src/types/StudyType";
+import { MaterialType, StudyType } from "@/src/types/StudyType";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 type StudyContextType = {
@@ -43,6 +43,8 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             color_name: newParsedStudy.color_name
         }
 
+        console.log("DADOS QUE O REACT VAI ENVIAR:", newStudy);
+
         const formData = new FormData();
         formData.append('study_data', JSON.stringify(newStudy))
 
@@ -56,6 +58,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             setStudies(currentStudies => [...currentStudies, resp.data])
             setParsedStudy(undefined)
             setCurrentSelectedMaterial([])
+            
 
         } catch (error) {
             return "falha ao criar estudo. erro:" + error
@@ -76,7 +79,12 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         }
 
         const resp = await axios_api.post('/parse_study', payload)
-        setParsedStudy(resp.data as ParsedStudyType);
+        const parsedStudyData = resp.data as ParsedStudyType & { materials?: MaterialType[] };
+
+        setParsedStudy({
+            ...parsedStudyData,
+            material: parsedStudyData.material ?? parsedStudyData.materials ?? [],
+        });
     }
 
     function discardParsedStudy(){
