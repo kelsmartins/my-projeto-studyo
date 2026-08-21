@@ -10,43 +10,44 @@ export default function Board() {
 
   const [showFakeChat, setShowFakeChat] = useState(false);
 
-  const {getStudies, studies} = useStudyContext()
+  const { getStudies, studies } = useStudyContext()
 
-  useEffect(()=>{
+  useEffect(() => {
     getStudies()
   }, [])
 
-  function handleShowFakeChat(){
+  function handleShowFakeChat() {
     setShowFakeChat(!showFakeChat)
   }
 
   return (
-    <div className="flex flex-col justify-between min-h-screen bg-[#D3CDBE]">
+    <div className="flex flex-col min-h-screen bg-[#D3CDBE]">
 
-        <div className="w-full h-14 p-6 flex items-center justify-between text-[#292524]">
+      <div className="w-full h-14 p-6 flex items-center justify-between text-[#292524]">
 
-          <h2 className=" font-bold text-xl">
-            Mural de Cards
-          </h2>
+        <h2 className=" font-bold text-xl">
+          Mural de Cards
+        </h2>
 
-          <button 
+        <button
           className="flex items-center justify-center gap-1 px-2 py-1 bg-[#292524] rounded-lg text-[#D3CDBE] shadow-xl"
           onClick={handleShowFakeChat}>
-            <PlusCircle size={18} className=" font-bold"/>
-            estudo
-          </button>
+          <PlusCircle size={18} className=" font-bold" />
+          estudo
+        </button>
 
-          {showFakeChat && 
-            <FakeChat handleShowFakeChat={handleShowFakeChat} />
-          }
+        {showFakeChat &&
+          <FakeChat handleShowFakeChat={handleShowFakeChat} />
+        }
 
-        </div>
+      </div>
 
-        <ul className="flex-1 p-4">
-            {studies.map((study, index) => (
-              <StudyCard key={index} studyData={study}/>
-            )) }
-        </ul>
+      <ul className="flex-1 flex flex-wrap gap-4 p-4 justify-start">
+        {studies.map((study, index) => (
+          <StudyCard key={index} studyData={study} />
+        ))}
+      </ul>
+
     </div>
   );
 }
