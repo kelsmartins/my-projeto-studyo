@@ -10,11 +10,7 @@ export default function Board() {
 
   const [showFakeChat, setShowFakeChat] = useState(false);
 
-  const { getStudies, studies } = useStudyContext()
-
-  useEffect(() => {
-    getStudies()
-  }, [])
+  const { studies } = useStudyContext()
 
   function handleShowFakeChat() {
     setShowFakeChat(!showFakeChat)
