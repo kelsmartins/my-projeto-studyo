@@ -2,7 +2,7 @@
 import { axios_api } from "@/src/api/axios_api";
 import { ParsedStudyType } from "@/src/types/ParsedStudyType";
 import { MaterialType, StudyType } from "@/src/types/StudyType";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 type StudyContextType = {
     studies: StudyType[]
@@ -31,6 +31,10 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         const studiesFromApi = Array.isArray(res.data) ? res.data : [res.data]
         setStudies(studiesFromApi)
     }
+
+    useEffect(()=>{
+    getStudies()
+    }, [])
 
     async function addStudy(newParsedStudy: ParsedStudyType) {
 
