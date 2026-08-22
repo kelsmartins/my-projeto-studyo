@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StudyDetails } from "./StudyDetails";
 import { StudyType } from "@/src/types/StudyType";
+import { File, Link } from "lucide-react";
 
 type StudyCardProps = {
     studyData: StudyType
@@ -23,7 +24,11 @@ export function StudyCard({studyData}: StudyCardProps){
 
                 <div className="w-full h-full flex flex-col">
                     <h2 className="text-[#292524] font-bold mb-1 text-md max-h-9 overflow-hidden tracking-tighter leading-none">{studyData.title}</h2>
-                    <h3 className="text-[#292524] text-xs font-bold" style={{color: studyData.color_hex}}>{studyData.date}</h3>
+                    <h3 className="text-[#292524] text-xs font-bold mb-1.5" style={{color: studyData.color_hex}}>{studyData.date}</h3>
+
+                    {studyData.material?.some(material => material.type === 'file') ? <File className="size-5" style={{color: studyData.color_hex ? studyData.color_hex : '#292524' }} /> : ''}
+                    {studyData.material?.some(material => material.type === 'link') ? <Link className="size-5" style={{color: studyData.color_hex ? studyData.color_hex : '#292524' }} /> : ''}
+
                 </div>
 
                 <div className="w-full h-10 flex items-center justify-end text-xs text-[#292524] gap-4">
