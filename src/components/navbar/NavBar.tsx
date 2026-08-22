@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function NavBar() {
 
     const pages = [
-        { name: "today", href: "/" },
-        { name: "board", href: "/board" },
+        { name: "Hoje", href: "/" },
+        { name: "Mural", href: "/board" },
     ];
 
     return (
