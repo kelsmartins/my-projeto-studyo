@@ -10,7 +10,7 @@ export function StudyDetails({ handleShowDetails, studyData }: StudyDetailsProps
 
 
     return (
-        <div className="w-screen h-screen backdrop-blur-xs absolute top-0 left-0 flex justify-center items-center"
+        <div className="w-screen h-screen backdrop-blur-xs bg-black/20 absolute top-0 left-0 flex justify-center items-center"
         onClick={handleShowDetails}>
             <div className="w-100 min-h-120 bg-[#E3DDCE] rounded-xl shadow-lg flex flex-col overflow-hidden" onClick={(e) => e.stopPropagation()}>
 

@@ -38,7 +38,7 @@ export default function Board() {
 
       </div>
 
-      <ul className="flex-1 flex flex-wrap gap-4 p-4 justify-start">
+      <ul className="flex-1 grid content-start grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-5 p-4">
         {studies.map((study, index) => (
           <StudyCard key={index} studyData={study} />
         ))}
