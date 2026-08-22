@@ -26,9 +26,9 @@ export default function Board() {
         </h2>
 
         <button
-          className="flex items-center justify-center gap-1 px-2 py-1 bg-[#292524] rounded-lg text-[#D3CDBE] shadow-xl"
+          className="flex items-center justify-center gap-1 px-3 py-2 bg-[#292524] rounded-lg text-[#D3CDBE] text-xs shadow-xl"
           onClick={handleShowFakeChat}>
-          <PlusCircle size={18} className=" font-bold" />
+          <PlusCircle size={14} className=" font-bold" />
           estudo
         </button>
 
