@@ -5,13 +5,19 @@ import { MaterialType, StudyType } from "@/src/types/StudyType";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 type StudyContextType = {
-    studies: StudyType[]
+    studies: StudyType[];
+
     getStudies: () => void;
-    getCurrentSelectedMaterial: (file: File[]) => void;
-    addStudy: (newParsedStudy: ParsedStudyType) => void;
-    handleParsedStudy: (text: string, files: File[]) => void;
+    addStudy: (newParsedStudy: ParsedStudyType) => Promise<string>;
+
+    checkDoneStudy: (id: string) => Promise<string>;
+    deleteMaterial : (studyId: string, materialId: string) => Promise<string>;
+
+    parseStudy: (text: string, files: File[]) => void;
     parsedStudy: ParsedStudyType | null | undefined;
     discardParsedStudy: () => void;
+
+    getCurrentSelectedMaterial: (file: File[]) => void;
 }
 
 export const StudyContext = createContext({} as StudyContextType)
@@ -22,9 +28,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     const [parsedStudy, setParsedStudy] = useState<ParsedStudyType>();
     const [currentSelectedMaterial, setCurrentSelectedMaterial] = useState<File[]>([]);
 
-    function getCurrentSelectedMaterial(filelist: File[]){
-        setCurrentSelectedMaterial(filelist)
-    }
+    // CRUD BASICO
 
     async function getStudies() {
         const res = await axios_api.get('/studies')
@@ -44,7 +48,8 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             date: newParsedStudy.date,
             material: newParsedStudy.material,
             color_hex: newParsedStudy.color_hex,
-            color_name: newParsedStudy.color_name
+            color_name: newParsedStudy.color_name,
+            done: false
         }
 
         console.log("DADOS QUE O REACT VAI ENVIAR:", newStudy);
@@ -62,16 +67,37 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             setStudies(currentStudies => [...currentStudies, resp.data])
             setParsedStudy(undefined)
             setCurrentSelectedMaterial([])
-            
+            return String(resp.data);
 
         } catch (error) {
-            return "falha ao criar estudo. erro:" + error
+            return "erro ao criar estudo. erro:" + error
         }
-
-
     }
 
-    async function handleParsedStudy(text: string, files: File[]) {
+    async function checkDoneStudy(id: string){
+        try {
+            const resp = await axios_api.put(`/studies/${id}`, {done: true})
+            return "estudo concluido!"
+        } catch (error) {
+            return "erro ao concluir estudo: " + error 
+        }
+    }
+
+    async function deleteMaterial(studyId: string, materialId: string){
+        try {
+            const  resp = await axios_api.put(`/studies/${studyId}`, materialId)
+            await getStudies();
+            return String(resp.data)
+        } catch (error) {
+            return "falha ao atualizar material: " + error
+        }
+    }
+
+
+
+    // GERAR ESTUDO
+
+    async function parseStudy(text: string, files: File[]) {
 
         // coletar nomes
         const fileNames = files.map(file => file.name)
@@ -95,8 +121,13 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         setParsedStudy(undefined)
     }
 
+    
+    function getCurrentSelectedMaterial(filelist: File[]){
+        setCurrentSelectedMaterial(filelist)
+    }
+
     return (
-        <StudyContext.Provider value={{ studies, getStudies, getCurrentSelectedMaterial, addStudy, handleParsedStudy, parsedStudy, discardParsedStudy }}>
+        <StudyContext.Provider value={{ studies, getStudies, addStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial }}>
             {children}
         </StudyContext.Provider>
     )
