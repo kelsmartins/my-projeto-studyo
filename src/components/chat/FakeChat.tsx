@@ -18,9 +18,8 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
     const [message, setMessage] = useState("");
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-    const {parsedStudy} = useStudyContext();
+    const {parsedStudy, parseStudy} = useStudyContext();
 
-    const {handleParsedStudy} = useStudyContext();
 
     function handleAddFiles(newFiles: FileList) {
         const files = [...selectedFiles, ...Array.from(newFiles)];
@@ -30,7 +29,7 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
 
     function handleParse(){
         if(message.trim() != ''){
-            handleParsedStudy(message, selectedFiles)
+            parseStudy(message, selectedFiles)
         }
     }
 
