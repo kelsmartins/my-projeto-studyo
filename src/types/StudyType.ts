@@ -1,4 +1,5 @@
 export interface MaterialType {
+    id: string;
     type: string | File;
     name: string;
     url?: string; // Dica: url como opcional pois o Supabase devolve ele!
@@ -11,4 +12,5 @@ export interface StudyType {
     material: MaterialType[]; // Trocado de materials para material
     color_name: string;  
     color_hex: string; 
+    done:  boolean;
 }
