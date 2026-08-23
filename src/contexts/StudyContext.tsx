@@ -76,8 +76,8 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     async function checkDoneStudy(id: string){
         try {
-            const resp = await axios_api.put(`/studies/${id}`, {done: true})
-            return "estudo concluido!"
+            const resp = await axios_api.put(`/studies/${id}`)
+            return resp.data
         } catch (error) {
             return "erro ao concluir estudo: " + error 
         }
