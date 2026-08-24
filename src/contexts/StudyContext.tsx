@@ -85,7 +85,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     async function deleteMaterial(studyId: string, materialId: string){
         try {
-            const  resp = await axios_api.put(`/studies/${studyId}`, materialId)
+            const  resp = await axios_api.put(`/studies/${studyId}/material/${materialId}`)
             await getStudies();
             return String(resp.data)
         } catch (error) {
