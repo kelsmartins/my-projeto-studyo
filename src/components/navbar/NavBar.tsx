@@ -9,11 +9,11 @@ export default function NavBar() {
     ];
 
     return (
-        <nav className="bg-[#292524] p-4 w-[200px]">
+        <nav className="p-4 w-[150px] border-r border-[#292524]/15">
             <ul className="space-y-2 p-4">
                 {pages.map((page) => (
                     <li key={page.href}>
-                        <Link href={page.href} className="text-white text-sm hover:text-gray-300">
+                        <Link href={page.href} className="text-[#292524] text-sm hover:text-gray-300">
                             {page.name}
                         </Link>
                     </li>

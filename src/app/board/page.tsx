@@ -17,7 +17,7 @@ export default function Board() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#D3CDBE]">
+    <div className="flex flex-col min-h-screen">
 
       <div className="w-full h-14 p-6 flex items-center justify-between text-[#292524]">
 

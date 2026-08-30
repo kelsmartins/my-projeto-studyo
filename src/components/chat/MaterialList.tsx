@@ -12,7 +12,7 @@ export function MaterialList({ material }: FilesListProps) {
     return (
         <ul className={`w-full h-10 bg-[#E3DDCE] p-2 gap-1 ${material.length > 0 ? 'flex rounded-t-xl' : 'hidden'} shadow-lg overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
             {material.map((file, index) => (
-                <StudySource key={index} file={file} onClick={deleteMaterial} />
+                <StudySource key={index} file={file} handleClick={()=>{}} />
 
             ))}
         </ul>
@@ -20,10 +20,10 @@ export function MaterialList({ material }: FilesListProps) {
 
 type StudySourceProps = {
     file: File;
-    onClick: ()=> void; 
+    handleClick: ()=> void; 
 }
 
-export default function StudySource({ file, onClick }:  StudySourceProps) {
+export default function StudySource({ file, handleClick }:  StudySourceProps) {
     
         return( 
             <li
@@ -31,7 +31,7 @@ export default function StudySource({ file, onClick }:  StudySourceProps) {
                     <File size={24} className="text-black"/>
                     <span className="truncate">{file.name}</span>
                     <button className="bg-[#AFA99A] rounded-full size-4 flex items-center cursor-pointer"
-                    onClick={deleteM}>
+                    onClick={handleClick}>
                         <X w-full h-full className="text-[#292524]/70"/>
                     </button>
             </li>

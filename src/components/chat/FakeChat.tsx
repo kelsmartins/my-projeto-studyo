@@ -32,7 +32,6 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
     }
 
 
-
     return (
         <div className="w-screen h-screen bg-[#D3CDBE] absolute top-0 left-0 flex flex-col justify-center items-center">
 
