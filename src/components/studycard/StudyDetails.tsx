@@ -14,9 +14,9 @@ export function StudyDetails({ handleShowDetails, studyData }: StudyDetailsProps
     return (
         <div className="w-screen h-screen backdrop-blur-xs bg-black/20 absolute top-0 left-0 flex justify-center items-center"
         onClick={handleShowDetails}>
-            <div className="w-100 min-h-120 bg-[#E3DDCE] rounded-xl shadow-lg flex flex-col overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="w-100 min-h-120 bg-[#faf6ed] rounded-xl shadow-lg flex flex-col overflow-hidden" onClick={(e) => e.stopPropagation()}>
 
-                <div className="w-full h-4 rounded-t-xl" style={{backgroundColor: studyData.color_hex ? studyData.color_hex : '#292524' }}></div>
+                <div className="w-full h-1.5 rounded-t-xl" style={{backgroundColor: studyData.color_hex ? studyData.color_hex : '#292524' }}></div>
 
                 <ul className="flex-1 p-4 overflow-y-auto">
                     {studyData.material?.map((material) => 
@@ -37,7 +37,7 @@ type studySourceType = {
 }
 export function StudySource({material, borderColor}: studySourceType) {
     return (
-        <div className="size-24 bg-[#D3CDBE] rounded-xl flex flex-col justify-center p-4 overflow-hidden" style={{ border: `1px solid ${borderColor ? borderColor : '#292524'}` }}>
+        <div className="size-24 bg-[#F0ECE2] rounded-xl flex flex-col justify-center p-4 overflow-hidden" style={{ border: `1px solid ${borderColor ? borderColor : '#292524'}` }}>
             <button className="flex items-center justify-center absolute">
                 <X className="size-6"/>
             </button>

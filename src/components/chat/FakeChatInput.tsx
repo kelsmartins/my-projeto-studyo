@@ -10,7 +10,7 @@ type FakeChatInputProps = {
 
 export function FakeChatInput({ handleAddFiles, selectedFiles, setMessage, handleParse }: FakeChatInputProps) {
     return (
-        <div className={`w-full h-10 bg-[#E3DDCE] ${selectedFiles.length > 0 ? 'rounded-b-xl' : 'rounded-xl'} shadow-lg flex`}>
+        <div className={`w-full h-10 bg-[#faf6ed] ${selectedFiles.length > 0 ? 'rounded-b-xl' : 'rounded-xl'} shadow-lg flex`}>
     
             <label className="flex items-center justify-center w-10 h-full">
                 <Paperclip size={16} className="text-[#292524]/50"/>

@@ -13,7 +13,8 @@ export default function NavBar() {
             <ul className="space-y-2 p-4">
                 {pages.map((page) => (
                     <li key={page.href}>
-                        <Link href={page.href} className="text-[#292524] text-sm hover:text-gray-300">
+                        <Link href={page.href} className="text-[#292524] text-sm">
+                            
                             {page.name}
                         </Link>
                     </li>

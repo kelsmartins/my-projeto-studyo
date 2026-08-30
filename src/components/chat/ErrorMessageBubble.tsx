@@ -7,7 +7,7 @@ type ErrorMessageBubbleProps = {
 export function ErrorMessageBubble({ studyData }: ErrorMessageBubbleProps) {
   return (
     <div
-      className="bg-[#E3DDCE] p-4 rounded-xl max-w-[400px] shadow-sm">
+      className="bg-[#faf6ed] p-4 rounded-xl mb-2 max-w-[400px] shadow-sm flex flex-col">
 
       <p className="text-sm text-[#292524]">
         {studyData?.message}

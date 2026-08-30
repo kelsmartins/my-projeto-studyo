@@ -23,7 +23,7 @@ export function MessageBubble({ studyData }: MessageBubbleProps) {
 
   return (
     <div
-      className="bg-[#E3DDCE] p-4 rounded-xl mb-2 max-w-[400px] shadow-sm flex flex-col">
+      className="bg-[#faf6ed] p-4 rounded-xl mb-2 max-w-[400px] shadow-sm flex flex-col">
 
       <h4 className="m-0 mb-1 font-bold text-[#292524]">
         {studyData?.title}

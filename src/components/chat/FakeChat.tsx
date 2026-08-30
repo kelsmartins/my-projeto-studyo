@@ -33,18 +33,18 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
 
 
     return (
-        <div className="w-screen h-screen bg-[#D3CDBE] absolute top-0 left-0 flex flex-col justify-center items-center">
+        <div className="w-screen h-screen bg-[#F0ECE2] absolute top-0 left-0 flex flex-col justify-center items-center">
 
-            <div className="w-full h-10 bg-[#292524] fixed top-0">
+            <div className="w-full h-10 fixed top-0">
                 <button
                 onClick={handleShowFakeChat}>
-                    <X className="text-white absolute top-2 right-2" size={20} />
+                    <X className="text-[#292524] absolute top-2 right-2" size={20} />
                 </button>
             </div>
 
             <span className="text-[#292524]/60 italic w-100 text-xs mb-5 text-center">Informe o assunto, os materiais(links/arquivos), a data e uma cor :D</span>
 
-            <div className="w-100 max-h-80 flex flex-col">
+            <div className="w-96 max-h-80 flex flex-col">
                 <ul className="flex-1 flex items-center justify-center mb-5">
     
                     {parsedStudy != undefined && parsedStudy.message == null && parsedStudy != undefined && <MessageBubble studyData={parsedStudy}/> } 
