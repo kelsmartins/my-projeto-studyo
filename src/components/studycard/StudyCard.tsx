@@ -16,7 +16,7 @@ export function StudyCard({studyData}: StudyCardProps){
     }
 
     return (
-        <div className="w-full h-40 bg-[#E3DDCE] flex rounded-xl shadow-xl">
+        <div className="w-70 max-w-full h-40 bg-[#E3DDCE] flex rounded-xl shadow-xl">
 
             <div className="w-4 h-full rounded-l-xl" style={{backgroundColor: studyData.color_hex ? studyData.color_hex : '#292524' }}></div>
 
