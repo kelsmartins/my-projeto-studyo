@@ -11,13 +11,14 @@ type StudyContextType = {
     addStudy: (newParsedStudy: ParsedStudyType) => Promise<string>;
 
     checkDoneStudy: (id: string) => Promise<string>;
-    deleteMaterial : (studyId: string, materialId: string) => Promise<string>;
+    deleteMaterial : (studyId: string, materialId: string) => void;
 
     parseStudy: (text: string, files: File[]) => void;
     parsedStudy: ParsedStudyType | null | undefined;
     discardParsedStudy: () => void;
 
     getCurrentSelectedMaterial: (file: File[]) => void;
+    currentSelectedMaterial: File[]
 }
 
 export const StudyContext = createContext({} as StudyContextType)
@@ -89,7 +90,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             await getStudies();
             return String(resp.data)
         } catch (error) {
-            return "falha ao atualizar material: " + error
+            return "falha ao deletar material: " + error
         }
     }
 
@@ -127,7 +128,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <StudyContext.Provider value={{ studies, getStudies, addStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial }}>
+        <StudyContext.Provider value={{ studies, getStudies, addStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial }}>
             {children}
         </StudyContext.Provider>
     )
