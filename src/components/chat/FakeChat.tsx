@@ -1,7 +1,7 @@
 
 import { X } from "lucide-react";
 import { FakeChatInput } from "./FakeChatInput";
-import { FilesList } from "./FilesList";
+import { MaterialList } from "./MaterialList";
 import { useState } from "react";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { MessageBubble } from "./MessageBubble";
@@ -13,23 +13,21 @@ type FakeChatProps = {
 
 export function FakeChat({handleShowFakeChat} : FakeChatProps) {
 
-    const {getCurrentSelectedMaterial} = useStudyContext();
+    const {getCurrentSelectedMaterial, currentSelectedMaterial} = useStudyContext();
 
     const [message, setMessage] = useState("");
-    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
     const {parsedStudy, parseStudy} = useStudyContext();
 
 
     function handleAddFiles(newFiles: FileList) {
-        const files = [...selectedFiles, ...Array.from(newFiles)];
-        setSelectedFiles(files);
+        const files = [...Array.from(newFiles)];
         getCurrentSelectedMaterial(files);
     }
 
     function handleParse(){
         if(message.trim() != ''){
-            parseStudy(message, selectedFiles)
+            parseStudy(message, currentSelectedMaterial)
         }
     }
 
@@ -55,8 +53,8 @@ export function FakeChat({handleShowFakeChat} : FakeChatProps) {
             
                 </ul>
 
-                <FilesList  material={selectedFiles} />
-                <FakeChatInput handleAddFiles={handleAddFiles} selectedFiles={selectedFiles} setMessage={setMessage} handleParse={handleParse} />
+                <MaterialList  material={currentSelectedMaterial} />
+                <FakeChatInput handleAddFiles={handleAddFiles} selectedFiles={currentSelectedMaterial} setMessage={setMessage} handleParse={handleParse} />
 
             </div>  
         </div>
