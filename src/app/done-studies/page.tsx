@@ -13,7 +13,7 @@ export default function DoneStudies() {
     return (
         <div className="flex flex-col min-h-screen">
 
-            <div className="w-full px-6 py-4 flex items-center justify-between text-[#292524]">
+            <div className="w-full flex items-center justify-between text-[#292524] px-6 py-4">
 
                 <h2 className="font-bold text-xl">
                     Estudos concluídos
@@ -28,7 +28,7 @@ export default function DoneStudies() {
 
             </div>
 
-            <ul className=" px-6 py-4 flex">
+            <ul className="flex p-4">
                 {doneStudies.map((study, index) => (
                     <StudyCard key={index} studyData={study} />
                 ))}
