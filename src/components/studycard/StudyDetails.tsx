@@ -39,7 +39,8 @@ export function StudySource({ studyData, thisMaterial }: studySourceType) {
 
     return (
         <div className="size-24 bg-[#F0ECE2] rounded-xl flex flex-col justify-center p-4 overflow-hidden relative" style={{ border: `1px solid ${studyData.color_hex ? studyData.color_hex : '#292524'}` }}>
-            <button className="absolute top-1 right-1 flex items-center justify-center size-6 rounded-md text-[#292524]/50 hover:bg-red-100 hover:text-red-600 transition-colors">
+            <button className="absolute top-1 right-1 flex items-center justify-center size-6 rounded-md text-[#292524]/50 hover:bg-red-100 hover:text-red-600 transition-colors"
+            onClick={()=>deleteMaterial(studyData.id, thisMaterial.id)}>
                 <X className="size-3.5" />
             </button>
             <Link className="size-6 mx-auto" style={{ color: studyData.color_hex ? studyData.color_hex : '#292524' }} />

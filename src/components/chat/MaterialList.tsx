@@ -12,7 +12,7 @@ export function MaterialList({ material }: FilesListProps) {
     return (
         <ul className={`w-full h-10 bg-[#faf6ed] p-2 gap-1 ${material.length > 0 ? 'flex rounded-t-xl' : 'hidden'} shadow-lg overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
             {material.map((file, index) => (
-                <StudySource key={index} file={file} handleClick={()=>{}} />
+                <StudySource key={index} file={file} index={index} />
 
             ))}
         </ul>
@@ -20,10 +20,12 @@ export function MaterialList({ material }: FilesListProps) {
 
 type StudySourceProps = {
     file: File;
-    handleClick: ()=> void; 
+    index: number;
 }
 
-export default function StudySource({ file, handleClick }:  StudySourceProps) {
+export default function StudySource({ file, index }:  StudySourceProps) {
+
+    const { deleteCurrentSelectedMaterial } = useStudyContext();
     
         return( 
             <li
@@ -31,7 +33,7 @@ export default function StudySource({ file, handleClick }:  StudySourceProps) {
                     <File size={26} className="text-black"/>
                     <span className="truncate">{file.name}</span>
                     <button className="bg-[#D3CDBE] rounded-full size-4 flex items-center cursor-pointer"
-                    onClick={handleClick}>
+                    onClick={()=> deleteCurrentSelectedMaterial(index)}>
                         <X w-full h-full className="text-[#292524]/50"/>
                     </button>
             </li>

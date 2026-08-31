@@ -11,7 +11,7 @@ type StudyContextType = {
     addStudy: (newParsedStudy: ParsedStudyType) => Promise<string>;
 
     checkDoneStudy: (id: string) => Promise<string>;
-    deleteMaterial : (studyId: string, materialId: string) => void;
+    deleteMaterial : (studyId: string, materialId: string) => Promise<string>;
 
     parseStudy: (text: string, files: File[]) => void;
     parsedStudy: ParsedStudyType | null | undefined;
@@ -19,6 +19,7 @@ type StudyContextType = {
 
     getCurrentSelectedMaterial: (file: File[]) => void;
     currentSelectedMaterial: File[]
+    deleteCurrentSelectedMaterial: (newIndex: number) => void;
 }
 
 export const StudyContext = createContext({} as StudyContextType)
@@ -131,11 +132,15 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     
     function getCurrentSelectedMaterial(filelist: File[]){
-        setCurrentSelectedMaterial(filelist)
+        setCurrentSelectedMaterial(prev => [...prev, ...filelist])
+    }
+
+    function deleteCurrentSelectedMaterial(newIndex: number){
+        setCurrentSelectedMaterial(currentSelectedMaterial.filter((_, index) => index !== newIndex))
     }
 
     return (
-        <StudyContext.Provider value={{ studies, getStudies, addStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial }}>
+        <StudyContext.Provider value={{ studies, getStudies, addStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
             {children}
         </StudyContext.Provider>
     )
