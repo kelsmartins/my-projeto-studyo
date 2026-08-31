@@ -6,6 +6,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 
 type StudyContextType = {
     studies: StudyType[];
+    doneStudies: StudyType[];
 
     getStudies: () => void;
     addStudy: (newParsedStudy: ParsedStudyType) => Promise<string>;
@@ -27,15 +28,35 @@ export const StudyContext = createContext({} as StudyContextType)
 export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     const [studies, setStudies] = useState<StudyType[]>([])
+    const [doneStudies, setDoneStudies] = useState<StudyType[]>([])
     const [parsedStudy, setParsedStudy] = useState<ParsedStudyType>();
     const [currentSelectedMaterial, setCurrentSelectedMaterial] = useState<File[]>([]);
 
     // CRUD BASICO
 
     async function getStudies() {
-        const res = await axios_api.get('/studies')
-        const studiesFromApi = Array.isArray(res.data) ? res.data : [res.data]
-        setStudies(studiesFromApi)
+        try {
+            const res = await axios_api.get('/studies')
+            const studiesFromApi = Array.isArray(res.data) ? res.data : [res.data]
+
+            const activeStudies: StudyType[] = []
+            const completedStudies: StudyType[] = []
+
+            studiesFromApi.forEach(study => {
+                if (study.done === false) {
+                    activeStudies.push(study)
+                    return
+                }
+
+                completedStudies.push(study)
+            })
+
+            setStudies(activeStudies)
+            setDoneStudies(completedStudies)
+            
+        } catch (error) {
+            console.error('erro ao buscar estudos:', error)
+        }
     }
 
     useEffect(()=>{
@@ -79,7 +100,15 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     async function checkDoneStudy(id: string){
         try {
             const resp = await axios_api.put(`/studies/${id}`)
+            const checkedDoneStudy = studies.find(study => study.id === id)
+
+            if (checkedDoneStudy) {
+                setStudies(currentStudies => currentStudies.filter(study => study.id !== id))
+                setDoneStudies(currentDoneStudies => [...currentDoneStudies, { ...checkedDoneStudy, done: true }])
+            }
+
             return resp.data
+
         } catch (error) {
             return "erro ao concluir estudo: " + error 
         }
@@ -140,7 +169,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <StudyContext.Provider value={{ studies, getStudies, addStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
+        <StudyContext.Provider value={{ studies, doneStudies, getStudies, addStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
             {children}
         </StudyContext.Provider>
     )
