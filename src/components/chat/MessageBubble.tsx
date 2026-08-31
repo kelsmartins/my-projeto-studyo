@@ -4,15 +4,17 @@ import {X, Check} from 'lucide-react'
 
 type MessageBubbleProps = {
   studyData: ParsedStudyType | null | undefined;
+  handleHideFakeChat: () => void;
 }
 
-export function MessageBubble({ studyData }: MessageBubbleProps) {
+export function MessageBubble({ studyData, handleHideFakeChat }: MessageBubbleProps) {
 
   const {addStudy, discardParsedStudy} = useStudyContext();
 
   function handleAddStudy(){
     if(studyData){
       addStudy(studyData);
+      handleHideFakeChat();
     }
   }
 
@@ -23,7 +25,7 @@ export function MessageBubble({ studyData }: MessageBubbleProps) {
 
   return (
     <div
-      className="bg-[#faf6ed] p-4 rounded-xl mb-2 max-w-[400px] shadow-sm flex flex-col">
+      className="bg-[#faf6ed] p-4 rounded-xl mb-2 max-w-full flex flex-col border border-[#292524]/15 shadow-sm">
 
       <h4 className="m-0 mb-1 font-bold text-[#292524]">
         {studyData?.title}
