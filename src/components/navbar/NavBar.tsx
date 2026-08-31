@@ -6,6 +6,7 @@ export default function NavBar() {
     const pages = [
         { name: "Hoje", href: "/" },
         { name: "Mural", href: "/board" },
+        {name: "Concluídos", href: "/done-studies"}
     ];
 
     return (
