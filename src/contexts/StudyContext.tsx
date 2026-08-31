@@ -65,9 +65,9 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         try {
             
             const resp = await axios_api.post('/studies', formData)
-            setStudies(currentStudies => [...currentStudies, resp.data])
             setParsedStudy(undefined)
             setCurrentSelectedMaterial([])
+            setStudies(currentStudies => [...currentStudies, newStudy])
             return String(resp.data);
 
         } catch (error) {
