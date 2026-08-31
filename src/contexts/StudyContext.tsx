@@ -86,8 +86,15 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     async function deleteMaterial(studyId: string, materialId: string){
         try {
-            const  resp = await axios_api.put(`/studies/${studyId}/material/${materialId}`)
-            await getStudies();
+            const  resp = await axios_api.delete(`/studies/${studyId}/material/${materialId}`)
+
+            setStudies(studies.map(study => (
+                study.id === studyId ? 
+                    {...study, material: study.material.filter(material => material.id !== materialId) }
+                    : study
+                )
+            ))
+            
             return String(resp.data)
         } catch (error) {
             return "falha ao deletar material: " + error
