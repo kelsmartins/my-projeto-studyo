@@ -42,7 +42,7 @@ export function FakeChat({ handleShowFakeChat }: FakeChatProps) {
                 <div className="w-full h-5 flex items-center justify-end mb-2">
                     <button
                         onClick={handleShowFakeChat}>
-                        <X className="text-[#292524]/50" size={20} />
+                        <X className="text-[#292524]/50 size-5 hover:text-[#292524] hover:size-5.5" />
                     </button>
                 </div>
 

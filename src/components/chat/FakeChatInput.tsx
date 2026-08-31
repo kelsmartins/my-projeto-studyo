@@ -13,7 +13,7 @@ export function FakeChatInput({ handleAddFiles, selectedFiles, setMessage, handl
         <div className={`w-full h-10 bg-[#faf6ed] ${selectedFiles.length > 0 ? 'rounded-b-xl' : 'rounded-xl'} border border-[#292524]/15 shadow-sm flex`}>
     
             <label className="flex items-center justify-center w-10 h-full">
-                <Paperclip size={16} className="text-[#292524]/50"/>
+                <Paperclip className="text-[#292524]/50 size-4 hover:text-[#292524] hover:size-4.5"/>
                 <input type="file" multiple className="hidden" onChange={(e) => e.target.files && handleAddFiles(e.target.files)} />
             </label>
 
@@ -27,7 +27,7 @@ export function FakeChatInput({ handleAddFiles, selectedFiles, setMessage, handl
             <button 
             className="flex items-center justify-center w-10 h-full"
             onClick={handleParse}>
-                <Send size={16} className="text-[#292524]/50"/>
+                <Send className="text-[#292524]/50 size-4 hover:text-[#292524] hover:size-4.5"/>
             </button>
 
 
