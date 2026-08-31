@@ -11,7 +11,7 @@ type StudyCardProps = {
 export function StudyCard({ studyData }: StudyCardProps) {
 
     const [showDetails, setShowDetails] = useState(false);
-    const {checkDoneStudy} = useStudyContext();
+    const {checkDoneStudy, deleteStudy} = useStudyContext();
 
     function handleShowDetails() {
         setShowDetails(!showDetails);
@@ -38,11 +38,24 @@ export function StudyCard({ studyData }: StudyCardProps) {
                         onClick={handleShowDetails}>
                         ver mais
                     </button>
-                    <button 
-                    className="font-medium text-xs px-3.5 py-1.5 border border-[#2B2A24]/30 bg-transparent rounded-md text-[#292524] hover:bg-[#2B2A24] hover:text-[#F5F1E6] transition-colors"
-                    onClick={()=> checkDoneStudy(studyData.id)}>
-                        concluir
-                    </button>
+
+                    {studyData.done == false ? 
+                        
+                        <button 
+                        className="font-medium text-xs px-3.5 py-1.5 border border-[#2B2A24]/30 bg-transparent rounded-md text-[#292524] hover:bg-[#2B2A24] hover:text-[#F5F1E6] transition-colors"
+                        onClick={()=> checkDoneStudy(studyData.id)}>
+                            concluir
+                        </button> 
+                    :
+                    
+                         <button 
+                        className="font-medium text-xs px-3.5 py-1.5 border border-[#2B2A24]/30 bg-transparent rounded-md text-[#292524] hover:bg-[#2B2A24] hover:text-[#F5F1E6] transition-colors"
+                        onClick={()=> deleteStudy(studyData.id)}>
+                            excluir
+                        </button> 
+
+                    }
+                    
                 </div>
 
             </div>
