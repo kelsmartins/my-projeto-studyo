@@ -10,6 +10,7 @@ type StudyContextType = {
 
     getStudies: () => void;
     addStudy: (newParsedStudy: ParsedStudyType) => Promise<string>;
+    deleteStudy: (id: string) => Promise<string>
 
     checkDoneStudy: (id: string) => Promise<string>;
     deleteMaterial : (studyId: string, materialId: string) => Promise<string>;
@@ -53,7 +54,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
             setStudies(activeStudies)
             setDoneStudies(completedStudies)
-            
+
         } catch (error) {
             console.error('erro ao buscar estudos:', error)
         }
@@ -96,6 +97,15 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             return "erro ao criar estudo. erro:" + error
         }
     }
+
+    async function deleteStudy(id: string){
+        const resp = await axios_api.delete(`/studies/${id}`)
+        let newStudyList = doneStudies.filter(studies => studies.id !== id)
+        setDoneStudies(newStudyList);
+
+        return resp.data;
+    }
+
 
     async function checkDoneStudy(id: string){
         try {
@@ -169,7 +179,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <StudyContext.Provider value={{ studies, doneStudies, getStudies, addStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
+        <StudyContext.Provider value={{ studies, doneStudies, getStudies, addStudy, deleteStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
             {children}
         </StudyContext.Provider>
     )
