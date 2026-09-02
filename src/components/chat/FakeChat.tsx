@@ -39,12 +39,14 @@ export function FakeChat({ handleShowFakeChat }: FakeChatProps) {
             <div className=" w-100 max-h-100 bg-[#F0ECE2] flex flex-col items-center justify-between p-1 rounded-md fixed top-12 right-6" 
             onClick={e => e.stopPropagation()}>
 
-                <div className="w-full h-5 flex items-center justify-end mb-2">
+                <header className="relative w-full flex flex-col items-center justify-center px-8 pt-2 pb-3 mb-2 border-b border-[#292524]/10">
+                    <h2 className="text-[#292524] font-semibold text-sm tracking-wide">Assistente de estudos</h2>
                     <button
+                        className="absolute right-2 top-2 rounded-full p-1 transition-colors hover:bg-[#292524]/10"
                         onClick={handleShowFakeChat}>
-                        <X className="text-[#292524]/50 size-5 hover:text-[#292524] hover:size-5.5" />
+                        <X className="text-[#292524]/50 size-5 transition-colors hover:text-[#292524]" />
                     </button>
-                </div>
+                </header>
 
                 <span className="text-[#292524]/60 italic w-100 text-xs mb-5 text-center">Informe o assunto, os materiais(links/arquivos), a data e uma cor :D</span>
 
