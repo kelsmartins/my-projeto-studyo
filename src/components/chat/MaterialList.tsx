@@ -34,7 +34,7 @@ export default function StudySource({ file, index }:  StudySourceProps) {
                     <span className="truncate">{file.name}</span>
                     <button className="bg-[#D3CDBE] rounded-full size-4 flex items-center cursor-pointer"
                     onClick={()=> deleteCurrentSelectedMaterial(index)}>
-                        <X w-full h-full className="text-[#292524]/50"/>
+                        <X className="w-full h-full text-[#292524]/50"/>
                     </button>
             </li>
         )
