@@ -11,11 +11,12 @@ type StudyContextType = {
     getStudies: () => void;
     addStudy: (newParsedStudy: ParsedStudyType) => Promise<string>;
     deleteStudy: (id: string) => Promise<string>
+    deleteDoneStudies: () => Promise<string>;
 
     checkDoneStudy: (id: string) => Promise<string>;
     deleteMaterial : (studyId: string, materialId: string) => Promise<string>;
 
-    parseStudy: (text: string, files: File[]) => void;
+    parseStudy: (text: string, files: File[]) => Promise<void>;
     parsedStudy: ParsedStudyType | null | undefined;
     discardParsedStudy: () => void;
 
@@ -109,7 +110,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     async function checkDoneStudy(id: string){
         try {
-            const resp = await axios_api.put(`/studies/${id}`)
+            const resp = await axios_api.put(`/studies/done-studies/${id}`)
             const checkedDoneStudy = studies.find(study => study.id === id)
 
             if (checkedDoneStudy) {
@@ -141,6 +142,17 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         }
     }
 
+    async function deleteDoneStudies(){
+        try {
+            const resp = await axios_api.delete('/studies/done-studies')
+            setDoneStudies([])
+            return String(resp.data)
+        }
+        catch (error) {
+            return "erro ao deletar estudos concluídos: " + error
+        }
+    }
+
 
 
     // GERAR ESTUDO
@@ -157,7 +169,11 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         }
 
         const resp = await axios_api.post('/parse_study', payload)
-        const parsedStudyData = resp.data as ParsedStudyType & { materials?: MaterialType[] };
+        console.log("Resposta do backend:", resp.data);
+        const responseData = resp.data;
+        const parsedStudyData = typeof responseData === "string"
+            ? JSON.parse(responseData) as ParsedStudyType & { materials?: MaterialType[] }
+            : responseData as ParsedStudyType & { materials?: MaterialType[] };
 
         setParsedStudy({
             ...parsedStudyData,
@@ -179,7 +195,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <StudyContext.Provider value={{ studies, doneStudies, getStudies, addStudy, deleteStudy, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
+        <StudyContext.Provider value={{ studies, doneStudies, getStudies, addStudy, deleteStudy, deleteDoneStudies, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
             {children}
         </StudyContext.Provider>
     )
