@@ -1,13 +1,14 @@
 'use client';
 import { StudyCard } from "@/src/components/studycard/StudyCard";
 import { useStudyContext } from "@/src/contexts/StudyContext";
-import { Trash2Icon } from "lucide-react";
+import { Trash2Icon, X } from "lucide-react";
+import { useState } from "react";
 
 
 export default function DoneStudies() {
 
-
-    const { doneStudies } = useStudyContext()
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const { doneStudies, deleteDoneStudies } = useStudyContext()
 
 
     return (
@@ -20,11 +21,15 @@ export default function DoneStudies() {
                 </h2>
 
                 <button
-          className="flex items-center justify-center gap-1 px-3 py-2 bg-[#292524] rounded-lg text-[#D3CDBE] text-xs shadow-xl"
-          onClick={()=>{}}>
-          <Trash2Icon size={14} className="font-bold" />
-          todos
-        </button>
+                    className="flex items-center justify-center gap-1 px-3 py-2 bg-[#292524] rounded-lg text-[#D3CDBE] text-xs shadow-xl"
+                    onClick={showDeleteModal ? () => setShowDeleteModal(false) : () => setShowDeleteModal(true)}>
+                    <Trash2Icon size={14} className="font-bold" />
+                    todos
+                </button>
+
+                {showDeleteModal && 
+                    <DeleteModal onConfirm={deleteDoneStudies} onCancel={() => setShowDeleteModal(false)} />
+                }
 
             </div>
 
@@ -36,4 +41,57 @@ export default function DoneStudies() {
 
         </div>
     );
+}
+
+type deleteModalProps = {
+    onConfirm: () => void;
+    onCancel: () => void;
+}
+
+export function DeleteModal({ onConfirm, onCancel }: deleteModalProps) {
+
+    return (
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#292524]/20 px-4 backdrop-blur-sm"
+>
+            <div className="w-full max-w-sm overflow-hidden rounded-xl border border-[#E7E1D5] bg-[#F5F1E8] shadow-2xl">
+                <header className="relative mb-2 flex w-full flex-col items-center justify-center border-b border-[#292524]/10 px-8 pb-3 pt-2">
+                    <h2 id="delete-modal-title" className="text-sm font-semibold tracking-wide text-[#292524]">
+                        Confirmar exclusão
+                    </h2>
+                    <button
+                        aria-label="Fechar modal"
+                        className="absolute right-2 top-2 rounded-full p-1 transition-colors hover:bg-[#292524]/10"
+                        onClick={onCancel}
+                    >
+                        <X className="size-5 text-[#292524]/50 transition-colors hover:text-[#292524]" />
+                    </button>
+                </header>
+                <div className="p-4 sm:p-5">
+                    <div className="mb-4 flex items-start gap-3">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+                            <Trash2Icon size={17} />
+                        </div>
+                        <p className="mt-1 text-xs leading-5 text-[#6B6258]">
+                            Tem certeza de que deseja excluir todos os estudos concluídos? Esta ação não pode ser desfeita.
+                        </p>
+                    </div>
+                    <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                    <button
+                        className="rounded-lg border border-[#D8D0C2] px-4 py-2 text-xs font-semibold text-[#5C554D] transition hover:bg-[#F1ECE2] focus:outline-none focus:ring-2 focus:ring-[#A8A092]"
+                        onClick={onCancel}
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        className="rounded-lg bg-red-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+                        onClick={onConfirm}
+                    >
+                        Excluir
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
