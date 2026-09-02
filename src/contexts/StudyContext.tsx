@@ -152,7 +152,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
         // criar pacote a ser enviado
         const payload = {
-            text: text,
+            content: text,
             fileNames: fileNames
         }
 
