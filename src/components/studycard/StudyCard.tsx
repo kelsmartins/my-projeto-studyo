@@ -28,8 +28,11 @@ export function StudyCard({ studyData }: StudyCardProps) {
                     <h2 className="text-[#292524] font-bold mb-1 text-md max-h-9 overflow-hidden tracking-tighter leading-none">{studyData.title}</h2>
                     <h3 className="text-[#292524] text-sm font-bold mb-1.5" style={{ color: studyData.color_hex }}>{studyData.date}</h3>
 
+                    <div className="flex gap-1 font-bold">
                     {studyData.material?.some(material => material.type === 'file') ? <File className="size-4.5" style={{ color: studyData.color_hex ? studyData.color_hex : '#292524' }} /> : ''}
                     {studyData.material?.some(material => material.type === 'link') ? <Link className="size-4.5" style={{ color: studyData.color_hex ? studyData.color_hex : '#292524' }} /> : ''}
+                    </div>
+
 
                 </div>
 
