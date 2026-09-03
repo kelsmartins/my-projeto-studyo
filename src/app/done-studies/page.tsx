@@ -54,7 +54,7 @@ export function DeleteModal({ onConfirm, onCancel }: deleteModalProps) {
                 </header>
                 <div className="p-4 sm:p-5">
                     <div className="mb-4 flex items-start gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#292524] text-red-600">
                             <Trash2Icon size={17} />
                         </div>
                         <p className="mt-1 text-xs leading-5 text-[#6B6258]">
@@ -63,13 +63,13 @@ export function DeleteModal({ onConfirm, onCancel }: deleteModalProps) {
                     </div>
                     <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                         <button
-                            className="rounded-lg border border-[#D8D0C2] px-4 py-2 text-xs font-semibold text-[#5C554D] transition hover:bg-[#F1ECE2] focus:outline-none focus:ring-2 focus:ring-[#A8A092]"
+                            className="rounded-lg border border-[#D8D0C2] px-4 py-2 text-xs font-semibold text-[#5C554D] transition hover:bg-[#F1ECE2]"
                             onClick={onCancel}
                         >
                             Cancelar
                         </button>
                         <button
-                            className="rounded-lg bg-red-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+                            className="rounded-lg bg-[#292524] px-4 py-2 text-xs font-semibold shadow-sm transition hover:bg-red-700  text-red-600 hover:text-[#292524]"
                             onClick={onConfirm}
                         >
                             Excluir
