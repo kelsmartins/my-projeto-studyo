@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <StudyContextProvider>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F0ECE2]`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F2F5F7]`}>
         <div className="flex min-h-screen">
           <NavBar />
           <main className="flex-1 h-screen min-h-0 overflow-y-auto no-scrollbar">
