@@ -67,11 +67,16 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     async function addStudy(newParsedStudy: ParsedStudyType) {
 
+        const materialsWithIds: MaterialType[] = newParsedStudy.material.map(material => ({
+            ...material,
+            id: material.id ?? crypto.randomUUID(),
+        }))
+
         const newStudy: StudyType = {
-            id: newParsedStudy.id,
+            id: crypto.randomUUID(),
             title: newParsedStudy.title,
             date: newParsedStudy.date,
-            material: newParsedStudy.material,
+            material: materialsWithIds,
             color_hex: newParsedStudy.color_hex,
             color_name: newParsedStudy.color_name,
             done: false
@@ -118,6 +123,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
                 setDoneStudies(currentDoneStudies => [...currentDoneStudies, { ...checkedDoneStudy, done: true }])
             }
 
+            getStudies();
             return resp.data
 
         } catch (error) {
@@ -136,7 +142,10 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
                 )
             ))
             
+            getStudies();
+            console.log("material deletado com sucesso:", resp.data)
             return String(resp.data)
+
         } catch (error) {
             return "falha ao deletar material: " + error
         }

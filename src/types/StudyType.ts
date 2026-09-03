@@ -1,5 +1,7 @@
+import { UUID } from "crypto";
+
 export interface MaterialType {
-    id: string;
+    id: UUID;
     type: string | File;
     name: string;
     url?: string; // Dica: url como opcional pois o Supabase devolve ele!
