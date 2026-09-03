@@ -67,7 +67,10 @@ export function DeleteModal({ onConfirm, onCancel }: deleteModalProps) {
                         </button>
                         <button
                             className="rounded-lg bg-[#292524] px-4 py-2 text-xs font-semibold shadow-sm transition hover:bg-red-700  text-red-600 hover:text-[#292524]"
-                            onClick={onConfirm}
+                            onClick={()=>{
+                                onConfirm();
+                                onCancel();
+                            }}
                         >
                             Excluir
                         </button>
