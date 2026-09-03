@@ -110,7 +110,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
     async function checkDoneStudy(id: string){
         try {
-            const resp = await axios_api.put(`/studies/done-studies/${id}`)
+            const resp = await axios_api.put(`/studies/${id}`)
             const checkedDoneStudy = studies.find(study => study.id === id)
 
             if (checkedDoneStudy) {

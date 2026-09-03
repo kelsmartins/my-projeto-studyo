@@ -36,7 +36,7 @@ export function FakeChat({ handleShowFakeChat }: FakeChatProps) {
         <div className="w-screen h-screen bg-black/20 absolute top-0 left-0 flex justify-center items-center"
         onClick={handleShowFakeChat}>
 
-            <div className=" w-100 max-h-100 bg-[#F0ECE2] flex flex-col items-center justify-between p-1 rounded-md fixed top-12 right-6" 
+            <div className=" w-100 max-h-100 bg-[#F2F5F7] flex flex-col items-center justify-between p-1 rounded-md fixed top-12 right-6" 
             onClick={e => e.stopPropagation()}>
 
                 <header className="relative w-full flex flex-col items-center justify-center px-8 pt-2 pb-3 mb-2 border-b border-[#292524]/10">
