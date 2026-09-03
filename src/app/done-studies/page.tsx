@@ -38,7 +38,7 @@ export function DeleteModal({ onConfirm, onCancel }: deleteModalProps) {
         <div
             className="absolute top-0 left-0 w-screen h-screen flex items-center justify-center bg-[#292524]/20 px-4"
         >
-            <div className="w-full max-w-sm overflow-hidden rounded-xl border border-[#E7E1D5] bg-[#F5F1E8] shadow-2xl">
+            <div className="w-full max-w-sm overflow-hidden rounded-xl border border-[#E7E1D5] bg-[#F9FBFC] shadow-2xl">
 
                 <header className="relative mb-2 flex w-full flex-col items-center justify-center border-b border-[#292524]/10 px-8 pb-3 pt-2">
                     <h2 className="text-sm font-semibold tracking-wide text-[#292524]">
