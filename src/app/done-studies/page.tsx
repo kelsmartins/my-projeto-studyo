@@ -37,27 +37,24 @@ export function DeleteModal({ onConfirm, onCancel }: deleteModalProps) {
     return (
         <div
             className="absolute top-0 left-0 w-screen h-screen flex items-center justify-center bg-[#292524]/20 px-4"
-        >
-            <div className="w-full max-w-sm overflow-hidden rounded-xl border border-[#E7E1D5] bg-[#F9FBFC] shadow-2xl">
+        onClick={onCancel}>
+            <div className="w-full max-w-sm overflow-hidden rounded-xl border border-[#E7E1D5] bg-[#F9FBFC] shadow-2xl"
+                onClick={(e) => e.stopPropagation()}>
 
-                <header className="relative mb-2 flex w-full flex-col items-center justify-center border-b border-[#292524]/10 px-8 pb-3 pt-2">
+                <header className="relative mb-1 flex w-full flex-col items-center justify-center border-b border-[#292524]/10 px-8 pb-3 pt-2">
                     <h2 className="text-sm font-semibold tracking-wide text-[#292524]">
                         Confirmar exclusão
                     </h2>
                     <button
-                        aria-label="Fechar modal"
                         className="absolute right-2 top-2 rounded-full p-1 transition-colors hover:bg-[#292524]/10"
                         onClick={onCancel}
                     >
                         <X className="size-5 text-[#292524]/50 transition-colors hover:text-[#292524]" />
                     </button>
                 </header>
-                <div className="p-4 sm:p-5">
-                    <div className="mb-4 flex items-start gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#292524] text-red-600">
-                            <Trash2Icon size={17} />
-                        </div>
-                        <p className="mt-1 text-xs leading-5 text-[#6B6258]">
+                <div className="p-2 sm:p-4">
+                    <div className="mb-3 flex items-center">
+                        <p className=" text-xs leading-5 text-[#6B6258]">
                             Tem certeza de que deseja excluir todos os estudos concluídos? Esta ação não pode ser desfeita.
                         </p>
                     </div>
