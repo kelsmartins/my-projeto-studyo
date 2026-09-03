@@ -72,8 +72,10 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             id: material.id ?? crypto.randomUUID(),
         }))
 
+        const studyId = crypto.randomUUID()
+
         const newStudy: StudyType = {
-            id: crypto.randomUUID(),
+            id: studyId,
             title: newParsedStudy.title,
             date: newParsedStudy.date,
             material: materialsWithIds,
