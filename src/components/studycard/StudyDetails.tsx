@@ -1,5 +1,5 @@
 import { StudyType } from "@/src/types/StudyType";
-import { StudySource } from "./StudySource";
+import { Material } from "./Material";
 
 type StudyDetailsProps = {
     handleShowDetails: () => void;
@@ -17,7 +17,7 @@ export function StudyDetails({ handleShowDetails, studyData }: StudyDetailsProps
 
                 <ul className="flex-1 p-4 overflow-y-auto flex flex-wrap gap-3 justify-start">
                     {studyData.material?.map((material, index ) =>
-                        <StudySource key={index} studyData={studyData} thisMaterial={material} />
+                        <Material key={index} thisColor={studyData.color_hex} thisMaterial={material} />
                     )}
                 </ul>
 
