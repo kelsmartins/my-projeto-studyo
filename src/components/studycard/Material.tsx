@@ -1,14 +1,20 @@
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { MaterialType} from "@/src/types/StudyType";
 import { CircleX, Link } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import { MaterialViewer } from "./MaterialViewer";
+
+const MaterialViewer = dynamic(
+    () => import("./MaterialViewer").then(({ MaterialViewer }) => MaterialViewer),
+    { ssr: false },
+);
 
 type MaterialProps = {
     thisColor: string;
+    studyId: string;
     thisMaterial: MaterialType
 }
-export function Material({ thisColor, thisMaterial }: MaterialProps) {
+export function Material({ thisColor, studyId, thisMaterial }: MaterialProps) {
 
     const { deleteMaterial } = useStudyContext();
     const [showMaterialViewer, setShowMaterialViewer] = useState(false);
@@ -22,7 +28,7 @@ export function Material({ thisColor, thisMaterial }: MaterialProps) {
             onClick={(e)=>{
                 e.stopPropagation();
                 window.alert("Apagando material..."); 
-                // deleteMaterial(studyData.id, thisMaterial.id)
+                deleteMaterial(studyId, thisMaterial.id)
                 }}>
                 <CircleX className="size-4.5" style={{ color: thisColor ? thisColor : '#292524' }} />
             </button>

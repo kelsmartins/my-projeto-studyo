@@ -17,7 +17,7 @@ export function StudyDetails({ handleShowDetails, studyData }: StudyDetailsProps
 
                 <ul className="flex-1 p-4 overflow-y-auto flex flex-wrap gap-3 justify-start">
                     {studyData.material?.map((material, index ) =>
-                        <Material key={index} thisColor={studyData.color_hex} thisMaterial={material} />
+                        <Material key={index} thisColor={studyData.color_hex} studyId={studyData.id} thisMaterial={material} />
                     )}
                 </ul>
 
