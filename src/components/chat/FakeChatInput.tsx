@@ -14,7 +14,7 @@ export function FakeChatInput({ handleAddFiles, selectedFiles, setMessage, handl
     
             <label className="flex items-center justify-center w-10 h-full">
                 <Paperclip className="text-[#292524]/50 size-4 hover:text-[#292524] hover:size-4.5"/>
-                <input type="file" multiple className="hidden" onChange={(e) => e.target.files && handleAddFiles(e.target.files)} />
+                <input type="file" accept="application/pdf" multiple className="hidden" onChange={(e) => e.target.files && handleAddFiles(e.target.files)} />
             </label>
 
             <input 
