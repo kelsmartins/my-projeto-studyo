@@ -1,13 +1,9 @@
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { MaterialType} from "@/src/types/StudyType";
 import { CircleX, Link } from "lucide-react";
-import dynamic from "next/dynamic";
 import { useState } from "react";
+import { MaterialPreview } from "../materials/MaterialPreview";
 
-const MaterialPreview = dynamic(
-    () => import("../materials/MaterialPreview").then(({ MaterialPreview }) => MaterialPreview),
-    { ssr: false },
-);
 
 type MaterialProps = {
     thisColor: string;
@@ -18,12 +14,12 @@ type MaterialProps = {
 export function Material({ thisColor, studyId, thisMaterial, handleClose }: MaterialProps) {
 
     const { deleteMaterial } = useStudyContext();
-    const [showMaterialViewer, setShowMaterialViewer] = useState(false);
+    const [showMaterialPreview, setShowMaterialPreview] = useState(false);
 
     return (
         <div 
-            className="size-24 rounded-xl flex flex-col justify-center p-4 overflow-hidden relative" style={{ border: `1px solid ${thisColor ? thisColor : '#292524'}` }}
-            onClick={()=> setShowMaterialViewer(true)}>
+            className="relative flex size-24 flex-col justify-center overflow-visible rounded-xl p-4" style={{ border: `1px solid ${thisColor ? thisColor : '#292524'}` }}
+            onClick={() => setShowMaterialPreview( showMaterialPreview === false ? true : false )}>
             
             <button className="absolute top-1 right-1 flex items-center justify-center size-6 rounded-md text-[#292524]/50 hover:bg-red-200 hover:text-red-600 transition-colors"
             onClick={(e)=>{
@@ -39,8 +35,8 @@ export function Material({ thisColor, studyId, thisMaterial, handleClose }: Mate
                 <span className="w-full min-w-0 text-xs truncate mt-1 font-bold text-center" style={{ color: thisColor ? thisColor : '#292524' }}>{thisMaterial.name}</span>
             </div>
 
-            {showMaterialViewer && (
-                <MaterialPreview materialData={thisMaterial} handleClose={handleClose} />
+            {showMaterialPreview && (
+                <MaterialPreview materialData={thisMaterial} handleClose={() => setShowMaterialPreview( showMaterialPreview === true ? false : true )} />
             )}
         </div>
     )
