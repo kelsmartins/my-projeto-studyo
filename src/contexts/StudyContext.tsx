@@ -14,7 +14,7 @@ type StudyContextType = {
     deleteDoneStudies: () => Promise<string>;
 
     checkDoneStudy: (id: string) => Promise<string>;
-    deleteMaterial : (studyId: string, materialId: string) => Promise<string>;
+    deleteMaterial: (studyId: string, materialId: string) => Promise<string>;
 
     parseStudy: (text: string, files: File[]) => Promise<void>;
     parsedStudy: ParsedStudyType | null | undefined;
@@ -61,16 +61,18 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         }
     }
 
-    useEffect(()=>{
-    getStudies()
+    useEffect(() => {
+        getStudies()
     }, [])
 
     async function addStudy(newParsedStudy: ParsedStudyType) {
 
-        const materialsWithIds: MaterialType[] = newParsedStudy.material.map(material => ({
-            ...material,
-            id: material.id ?? crypto.randomUUID(),
-        }))
+        const materialsWithIds: MaterialType[] = newParsedStudy.material
+            .filter(material => material.type !== "file")
+            .map(material => ({
+                ...material,
+                id: material.id ?? crypto.randomUUID()
+            }));
 
         const studyId = crypto.randomUUID()
 
@@ -89,12 +91,12 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         const formData = new FormData();
         formData.append('study_data', JSON.stringify(newStudy))
 
-        if(currentSelectedMaterial && currentSelectedMaterial.length > 0){
+        if (currentSelectedMaterial && currentSelectedMaterial.length > 0) {
             currentSelectedMaterial.forEach(material => formData.append('files', material))
         }
 
         try {
-            
+
             const resp = await axios_api.post('/studies', formData)
             setParsedStudy(undefined)
             setCurrentSelectedMaterial([])
@@ -106,7 +108,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         }
     }
 
-    async function deleteStudy(id: string){
+    async function deleteStudy(id: string) {
         const resp = await axios_api.delete(`/studies/${id}`)
         let newStudyList = doneStudies.filter(studies => studies.id !== id)
         setDoneStudies(newStudyList);
@@ -115,7 +117,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     }
 
 
-    async function checkDoneStudy(id: string){
+    async function checkDoneStudy(id: string) {
         try {
             const resp = await axios_api.put(`/studies/${id}`)
             const checkedDoneStudy = studies.find(study => study.id === id)
@@ -129,21 +131,21 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             return resp.data
 
         } catch (error) {
-            return "erro ao concluir estudo: " + error 
+            return "erro ao concluir estudo: " + error
         }
     }
 
-    async function deleteMaterial(studyId: string, materialId: string){
+    async function deleteMaterial(studyId: string, materialId: string) {
         try {
-            const  resp = await axios_api.delete(`/studies/${studyId}/material/${materialId}`)
+            const resp = await axios_api.delete(`/studies/${studyId}/material/${materialId}`)
 
             setStudies(studies.map(study => (
-                study.id === studyId ? 
-                    {...study, material: study.material.filter(material => material.id !== materialId) }
+                study.id === studyId ?
+                    { ...study, material: study.material.filter(material => material.id !== materialId) }
                     : study
-                )
+            )
             ))
-            
+
             getStudies();
             console.log("material deletado com sucesso:", resp.data)
             return String(resp.data)
@@ -153,7 +155,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         }
     }
 
-    async function deleteDoneStudies(){
+    async function deleteDoneStudies() {
         try {
             const resp = await axios_api.delete('/studies/done-studies')
             setDoneStudies([])
@@ -192,16 +194,16 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         });
     }
 
-    function discardParsedStudy(){
+    function discardParsedStudy() {
         setParsedStudy(undefined)
     }
 
-    
-    function getCurrentSelectedMaterial(filelist: File[]){
-        setCurrentSelectedMaterial(prev => [...prev, ...filelist])
+
+    function getCurrentSelectedMaterial(filelist: File[]) {
+        setCurrentSelectedMaterial(filelist)
     }
 
-    function deleteCurrentSelectedMaterial(newIndex: number){
+    function deleteCurrentSelectedMaterial(newIndex: number) {
         setCurrentSelectedMaterial(currentSelectedMaterial.filter((_, index) => index !== newIndex))
     }
 
