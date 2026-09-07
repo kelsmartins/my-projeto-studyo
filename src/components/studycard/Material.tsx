@@ -4,8 +4,8 @@ import { CircleX, Link } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 
-const MaterialViewer = dynamic(
-    () => import("../materials/MaterialViewer").then(({ MaterialViewer }) => MaterialViewer),
+const MaterialPreview = dynamic(
+    () => import("../materials/MaterialPreview").then(({ MaterialPreview }) => MaterialPreview),
     { ssr: false },
 );
 
@@ -13,8 +13,9 @@ type MaterialProps = {
     thisColor: string;
     studyId: string;
     thisMaterial: MaterialType
+    handleClose: () => void;
 }
-export function Material({ thisColor, studyId, thisMaterial }: MaterialProps) {
+export function Material({ thisColor, studyId, thisMaterial, handleClose }: MaterialProps) {
 
     const { deleteMaterial } = useStudyContext();
     const [showMaterialViewer, setShowMaterialViewer] = useState(false);
@@ -39,7 +40,7 @@ export function Material({ thisColor, studyId, thisMaterial }: MaterialProps) {
             </div>
 
             {showMaterialViewer && (
-                <MaterialViewer materialData={thisMaterial} />
+                <MaterialPreview materialData={thisMaterial} handleClose={handleClose} />
             )}
         </div>
     )
