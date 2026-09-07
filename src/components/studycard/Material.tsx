@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 
 const MaterialViewer = dynamic(
-    () => import("./MaterialViewer").then(({ MaterialViewer }) => MaterialViewer),
+    () => import("../materials/MaterialViewer").then(({ MaterialViewer }) => MaterialViewer),
     { ssr: false },
 );
 

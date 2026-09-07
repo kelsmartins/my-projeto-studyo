@@ -29,7 +29,7 @@ export default function StudySource({ file, index }:  StudySourceProps) {
     
         return( 
             <li
-                className="bg-[#E3DDCE] text-xs flex gap-2 p-2 w-26 h-full items-center justify-center rounded-md">
+                className="bg-[#F9FBFC] text-xs flex gap-2 p-2 w-26 h-full items-center justify-center rounded-md">
                     <File size={26} className="text-black"/>
                     <span className="truncate">{file.name}</span>
                     <button className="bg-[#D3CDBE] rounded-full size-4 flex items-center cursor-pointer"
