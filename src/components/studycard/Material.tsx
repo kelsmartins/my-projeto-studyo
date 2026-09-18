@@ -2,7 +2,7 @@ import { useStudyContext } from "@/src/contexts/StudyContext";
 import { MaterialType} from "@/src/types/StudyType";
 import { CircleX, Link } from "lucide-react";
 import { useState } from "react";
-import { MaterialPreview } from "../materialviewers/MaterialPreview";
+// import { MaterialPreview } from "../materialviewers/MaterialPreview";
 
 
 type MaterialProps = {
@@ -35,9 +35,9 @@ export function Material({ thisColor, studyId, thisMaterial, handleClose }: Mate
                 <span className="w-full min-w-0 text-xs truncate mt-1 font-bold text-center" style={{ color: thisColor ? thisColor : '#292524' }}>{thisMaterial.name}</span>
             </div>
 
-            {showMaterialPreview && (
+            {/* {showMaterialPreview && (
                 <MaterialPreview materialData={thisMaterial} handleClose={() => setShowMaterialPreview( showMaterialPreview === true ? false : true )} />
-            )}
+            )} */}
         </div>
     )
 }

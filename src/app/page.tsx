@@ -1,14 +1,16 @@
-// 'use client'
+'use client'
 
 // import { MaterialViewer } from "../components/materialviewers/MaterialViewer";
+import { PageHeader } from '../components/pages/PageHeader'
 
 
-// export default function Home() {
-//   return (
-//     <div className="flex min-h-screen p-4 flex items-center justify-between">
+export default function Home() {
+  return (
+    <div className="flex-1 min-h-[calc(100vh-50px)] bg-red-200">
 
-//       <MaterialViewer />
+      {/* <MaterialViewer /> */}
+      <PageHeader  title="Olá, usuário!" subtitle="Vamos continuar seus estudos?" theresButton={false}/>
 
-//     </div>
-//   );
-// }
+    </div>
+  );
+}

@@ -13,9 +13,9 @@ export default function DoneStudies() {
 
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex-1 min-h-[calc(100vh-50px)]">
 
-            <PageHeader  title="Estudos concluídos" subtitle="Recupere ou delete estudos concluídos" buttonElement={<Trash2Icon size={16} className="font-bold text-red-500" />} buttonText="Excluir todos" buttonTextColor="text-red-500" handleShow={showDeleteModal ? () => setShowDeleteModal(false) : () => setShowDeleteModal(true)} state={showDeleteModal} elementToShow={<DeleteModal onConfirm={deleteDoneStudies} onCancel={() => setShowDeleteModal(false)} />} />
+            <PageHeader title="Estudos concluídos" subtitle="Recupere ou delete estudos concluídos" buttonElement={<Trash2Icon size={16} className="font-bold text-red-500" />} buttonText="Excluir todos" buttonTextColor="text-red-500" handleShow={showDeleteModal ? () => setShowDeleteModal(false) : () => setShowDeleteModal(true)} state={showDeleteModal} elementToShow={<DeleteModal onConfirm={deleteDoneStudies} onCancel={() => setShowDeleteModal(false)} />} theresButton={true} />
 
             <ul className="flex p-4">
                 {doneStudies.map((study, index) => (

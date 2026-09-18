@@ -14,12 +14,9 @@ export default function NavBar() {
     ];
 
     return (
-        <nav className="min-h-screen w-[200px] shrink-0 border-r border-slate-200 bg-gradient-to-b from-slate-100 via-blue-50/40 to-slate-200/70 p-5 text-stone-800 shadow-[0_0_18px_rgba(147,197,253,0.16)]">
-            <div className="mb-10 px-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Studyo</p>
-                <h1 className="mt-2 text-xl font-bold tracking-tight text-stone-900">Seu espaço</h1>
-            </div>
-            <ul className="space-y-2">
+        <nav className="h-[50px] w-screen shrink-0 border-r border-slate-200 p-5 text-stone-800 flex">
+            <p className="text-xs font-semibold uppercase text-stone-500">Studyo</p>
+            <ul className="mx-auto flex">
                 {pages.map((page) => (
                     <li key={page.href}>
                         <Link

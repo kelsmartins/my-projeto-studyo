@@ -18,9 +18,9 @@ export default function Board() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex-1 min-h-[calc(100vh-50px)]">
       
-      <PageHeader  title="Mural de Cards" subtitle="Seu espaço de estudos" buttonElement={<PlusCircle size={16} />} buttonText="Novo estudo" handleShow={handleShowFakeChat} state={showFakeChat} elementToShow={<FakeChat handleShowFakeChat={handleShowFakeChat} />} />
+      <PageHeader  title="Mural de Cards" subtitle="Seu espaço de estudos" buttonElement={<PlusCircle size={16} />} buttonText="Novo estudo" handleShow={handleShowFakeChat} state={showFakeChat} elementToShow={<FakeChat handleShowFakeChat={handleShowFakeChat} />} theresButton={true} />
 
       <ul className="flex-1 grid grid-cols-[repeat(auto-fit,320px)] gap-5 p-4 overflow-y-auto justify-start">
         {studies.map((study, index) => (
