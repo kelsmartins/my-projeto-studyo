@@ -22,7 +22,7 @@ export default function Board() {
       
       <PageHeader  title="Mural de Cards" subtitle="Seu espaço de estudos" buttonElement={<PlusCircle size={16} />} buttonText="Novo estudo" handleShow={handleShowFakeChat} state={showFakeChat} elementToShow={<FakeChat handleShowFakeChat={handleShowFakeChat} />} theresButton={true} />
 
-      <ul className="flex-1 grid grid-cols-[repeat(auto-fit,320px)] gap-5 p-4 overflow-y-auto justify-start">
+      <ul className="flex-1 flex flex-col py-2 px-4">
         {studies.map((study, index) => (
           <StudyItem key={index} studyData={study} />
         ))}

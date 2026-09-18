@@ -4,11 +4,11 @@ import { StudyType } from "@/src/types/StudyType";
 import { File, Link } from "lucide-react";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 
-type StudyCardProps = {
+type StudyItemProps = {
     studyData: StudyType
 }
 
-export function StudyItem({ studyData }: StudyCardProps) {
+export function StudyItem({ studyData }: StudyItemProps) {
 
     const [showDetails, setShowDetails] = useState(false);
     const {checkDoneStudy, deleteStudy} = useStudyContext();
