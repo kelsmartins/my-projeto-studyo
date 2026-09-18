@@ -1,3 +1,5 @@
+import { MaterialViewer } from "./MaterialViewer" 
+
 export function StudyViewer(){
     return (
         <div className="w-full h-[calc(100vh-)] justify-between bg-green-300 flex justify-between">

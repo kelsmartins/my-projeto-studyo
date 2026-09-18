@@ -1,6 +1,6 @@
 'use client';
 import { PageHeader } from "@/src/components/pages/PageHeader";
-import { StudyCard } from "@/src/components/studycard/StudyCard";
+import { StudyItem } from "@/src/components/studycard/StudyItem";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { Trash2Icon, X } from "lucide-react";
 import { useState } from "react";
@@ -19,7 +19,7 @@ export default function DoneStudies() {
 
             <ul className="flex p-4">
                 {doneStudies.map((study, index) => (
-                    <StudyCard key={index} studyData={study} />
+                    <StudyItem key={index} studyData={study} />
                 ))}
             </ul>
 

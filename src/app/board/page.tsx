@@ -1,7 +1,7 @@
 'use client';
 import { FakeChat } from "@/src/components/chat/FakeChat";
 import { PageHeader } from "@/src/components/pages/PageHeader";
-import { StudyCard } from "@/src/components/studycard/StudyCard";
+import { StudyItem } from "@/src/components/studycard/StudyItem";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { PlusCircle } from "lucide-react";
 import { useState } from "react";
@@ -24,7 +24,7 @@ export default function Board() {
 
       <ul className="flex-1 grid grid-cols-[repeat(auto-fit,320px)] gap-5 p-4 overflow-y-auto justify-start">
         {studies.map((study, index) => (
-          <StudyCard key={index} studyData={study} />
+          <StudyItem key={index} studyData={study} />
         ))}
       </ul>
 
