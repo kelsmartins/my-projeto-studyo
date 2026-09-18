@@ -18,7 +18,7 @@ export default function Board() {
   }
 
   return (
-    <div className="flex-1 min-h-[calc(100vh-50px)]">
+    <div className="flex-1 min-h-[calc(100vh-60px)] bg-red-200">
       
       <PageHeader  title="Mural de Cards" subtitle="Seu espaço de estudos" buttonElement={<PlusCircle size={16} />} buttonText="Novo estudo" handleShow={handleShowFakeChat} state={showFakeChat} elementToShow={<FakeChat handleShowFakeChat={handleShowFakeChat} />} theresButton={true} />
 

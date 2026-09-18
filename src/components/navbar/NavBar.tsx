@@ -14,8 +14,8 @@ export default function NavBar() {
     ];
 
     return (
-        <nav className="h-[50px] w-screen shrink-0 border-r border-slate-200 p-5 text-stone-800 flex">
-            <p className="text-xs font-semibold uppercase text-stone-500">Studyo</p>
+        <nav className="h-[60px] w-screen shrink-0 border-r border-slate-200 p-5 text-stone-800 flex flex items-center">
+            <p className="text-xs font-semibold text-stone-500">Studyo</p>
             <ul className="mx-auto flex">
                 {pages.map((page) => (
                     <li key={page.href}>

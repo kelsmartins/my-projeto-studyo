@@ -13,7 +13,7 @@ export default function DoneStudies() {
 
 
     return (
-        <div className="flex-1 min-h-[calc(100vh-50px)]">
+        <div className="flex-1 min-h-[calc(100vh-60px)]">
 
             <PageHeader title="Estudos concluídos" subtitle="Recupere ou delete estudos concluídos" buttonElement={<Trash2Icon size={16} className="font-bold text-red-500" />} buttonText="Excluir todos" buttonTextColor="text-red-500" handleShow={showDeleteModal ? () => setShowDeleteModal(false) : () => setShowDeleteModal(true)} state={showDeleteModal} elementToShow={<DeleteModal onConfirm={deleteDoneStudies} onCancel={() => setShowDeleteModal(false)} />} theresButton={true} />
 

@@ -8,7 +8,7 @@ type StudyCardProps = {
     studyData: StudyType
 }
 
-export function StudyCard({ studyData }: StudyCardProps) {
+export function StudyItem({ studyData }: StudyCardProps) {
 
     const [showDetails, setShowDetails] = useState(false);
     const {checkDoneStudy, deleteStudy} = useStudyContext();
@@ -18,9 +18,9 @@ export function StudyCard({ studyData }: StudyCardProps) {
     }
 
     return (
-        <div className="w-full max-w-xs h-40 bg-[#F9FBFC] flex rounded-md border border-[#292524]/15 shadow-sm">
+        <div className="w-full h-40 bg-[#F9FBFC] flex rounded-md border border-[#292524]/15 shadow-sm">
 
-            <div className="w-1.5 h-full rounded-l-xl" style={{ backgroundColor: studyData.color_hex ? studyData.color_hex : '#292524' }}></div>
+            <div className="w-1 h-full rounded-l-xl" style={{ backgroundColor: studyData.color_hex ? studyData.color_hex : '#292524' }}></div>
 
             <div className="flex-1 flex flex-col justify-between p-4">
 

@@ -28,9 +28,9 @@ export default function RootLayout({
     <html lang="pt-BR">
       <StudyContextProvider>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F2F5F7]`}>
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col">
           <NavBar />
-          <main className="flex-1 w-screen min-h-0 overflow-y-auto no-scrollbar">
+          <main className="flex-1 overflow-y-auto no-scrollbar">
             {children}
           </main>
         </div>
