@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { StudyDetails } from "./StudyDetails";
 import { StudyType } from "@/src/types/StudyType";
-import { File, Link } from "lucide-react";
 import { useStudyContext } from "@/src/contexts/StudyContext";
+import { Check, Play } from "lucide-react";
 
 type StudyItemProps = {
     studyData: StudyType
@@ -11,57 +11,61 @@ type StudyItemProps = {
 export function StudyItem({ studyData }: StudyItemProps) {
 
     const [showDetails, setShowDetails] = useState(false);
-    const {checkDoneStudy, deleteStudy} = useStudyContext();
+    const { checkDoneStudy, deleteStudy } = useStudyContext();
 
     function handleShowDetails() {
         setShowDetails(!showDetails);
     }
 
     return (
-        <div className="w-full h-40 bg-[#F9FBFC] flex rounded-md border border-[#292524]/15 shadow-sm">
+        <div className={`w-full h-30 bg-[#F9FBFC] flex rounded-md border-l-3 border-l-[${studyData.color_hex}]`}>
 
-            <div className="w-1 h-full rounded-l-xl" style={{ backgroundColor: studyData.color_hex ? studyData.color_hex : '#292524' }}></div>
+            <div className="flex-1 flex flex-col p-4 ">
 
-            <div className="flex-1 flex flex-col justify-between p-4">
-
-                <div className="w-full h-full flex flex-col">
-                    <h2 className="text-[#292524] font-bold mb-1 text-md max-h-9 overflow-hidden tracking-tighter leading-none">{studyData.title}</h2>
+                <div className="w-full h-5 flex justify-between mb-2">
                     <h3 className="text-[#292524] text-sm font-bold mb-1.5" style={{ color: studyData.color_hex }}>{studyData.date}</h3>
-
-                    <div className="flex gap-1 font-bold">
-                    {studyData.material?.some(material => material.type === 'file') ? <File className="size-4.5" style={{ color: studyData.color_hex ? studyData.color_hex : '#292524' }} /> : ''}
-                    {studyData.material?.some(material => material.type === 'link') ? <Link className="size-4.5" style={{ color: studyData.color_hex ? studyData.color_hex : '#292524' }} /> : ''}
-                    </div>
-
-
+                    <p>Enem</p>
                 </div>
 
-                <div className="w-full h-10 flex items-center justify-end text-xs text-[#292524]/90 gap-4">
-                    <button className="font-medium hover:underline hover:cursor-pointer"
-                        onClick={handleShowDetails}>
-                        ver mais
-                    </button>
+                <h2 className="text-[#292524] font-bold mb-1 text-md truncate">{studyData.title}</h2>
+                <p className="text-xs font-bold mt-2">2 materiais</p>
 
-                    {studyData.done == false ? 
-                        
-                        <button 
-                        className="font-medium text-xs px-3.5 py-1.5 border border-[#2B2A24]/30 bg-transparent rounded-md text-[#292524] hover:bg-[#2B2A24] hover:text-[#F5F1E6] transition-colors"
-                        onClick={()=> checkDoneStudy(studyData.id)}>
-                            concluir
-                        </button> 
-                    :
-                    
-                         <button 
-                        className="font-medium text-xs px-3.5 py-1.5 border border-[#2B2A24]/30 bg-transparent rounded-md text-[#292524] hover:bg-[#2B2A24] hover:text-[#F5F1E6] transition-colors"
-                        onClick={()=> deleteStudy(studyData.id)}>
-                            excluir
-                        </button> 
-
-                    }
-                    
-                </div>
 
             </div>
+
+            {studyData.done == false ?
+
+                <div className="h-full w-30 flex flex-col items-center justify-center gap-4 border-l border-l-[#292524]">
+
+                    <button className="rounded-full flex items-center justify-center size-8"
+                        onClick={handleShowDetails}>
+                        <Play />
+                    </button>
+
+                    <button
+                        className="rounded-full flex items-center justify-center size-8"
+                        onClick={() => checkDoneStudy(studyData.id)}>
+                        < Check />
+                    </button>
+                </div>
+
+                :
+
+                <div className="h-full w-30 flex flex-col items-center justify-center gap-4 border-l border-l-[#292524]/10">
+
+                    <button className="rounded-full flex items-center justify-center border border-[#292524]/10"
+                        onClick={handleShowDetails}>
+                        Restaurar
+                    </button>
+
+                    <button
+                        className="rounded-full flex items-center justify-center"
+                        onClick={() => deleteStudy(studyData.id)}>
+                        Excluir
+                    </button>
+                </div>
+
+            }
 
             {showDetails && <StudyDetails handleShowDetails={handleShowDetails} studyData={studyData} />}
 

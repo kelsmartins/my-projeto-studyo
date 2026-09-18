@@ -17,7 +17,7 @@ export default function DoneStudies() {
 
             <PageHeader title="Estudos concluídos" subtitle="Recupere ou delete estudos concluídos" buttonElement={<Trash2Icon size={16} className="font-bold text-red-500" />} buttonText="Excluir todos" buttonTextColor="text-red-500" handleShow={showDeleteModal ? () => setShowDeleteModal(false) : () => setShowDeleteModal(true)} state={showDeleteModal} elementToShow={<DeleteModal onConfirm={deleteDoneStudies} onCancel={() => setShowDeleteModal(false)} />} theresButton={true} />
 
-            <ul className="flex-1 flex flex-col py-2 px-4">
+            <ul className="flex-1 flex flex-col py-2 px-6">
                 {doneStudies.map((study, index) => (
                     <StudyItem key={index} studyData={study} />
                 ))}
