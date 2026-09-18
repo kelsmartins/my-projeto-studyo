@@ -2,7 +2,7 @@ import { useStudyContext } from "@/src/contexts/StudyContext";
 import { MaterialType} from "@/src/types/StudyType";
 import { CircleX, Link } from "lucide-react";
 import { useState } from "react";
-import { MaterialPreview } from "../materials/MaterialPreview";
+import { MaterialPreview } from "../materialviewers/MaterialPreview";
 
 
 type MaterialProps = {
