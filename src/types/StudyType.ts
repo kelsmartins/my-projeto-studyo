@@ -12,7 +12,7 @@ export interface StudyType {
     title: string;
     date: string; // Trocado de Date para string
     material: MaterialType[]; // Trocado de materials para material
-    color_name: string;  
+    theme: string; 
     color_hex: string; 
     done:  boolean;
 }
