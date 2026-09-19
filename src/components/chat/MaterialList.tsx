@@ -10,18 +10,18 @@ export function MaterialList({ material }: FilesListProps) {
     return (
         <ul className={`w-full h-10 bg-[#F9FBFC] p-2 gap-1 ${material.length > 0 ? 'flex rounded-t-xl' : 'hidden'} shadow-lg border border-[#292524]/15 border-b-none overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
             {material.map((file, index) => (
-                <MaterialItem key={index} file={file} index={index} />
+                <MiniMaterialItem key={index} file={file} index={index} />
 
             ))}
         </ul>
     )}
 
-type MaterialItemProps = {
+type MiniMaterialItemProps = {
     file: File;
     index: number;
 }
 
-export default function MaterialItem({ file, index }:  MaterialItemProps) {
+export default function MiniMaterialItem({ file, index }:  MiniMaterialItemProps) {
 
     const { deleteCurrentSelectedMaterial } = useStudyContext();
     
