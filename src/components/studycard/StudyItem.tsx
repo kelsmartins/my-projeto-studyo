@@ -71,7 +71,7 @@ export function StudyItem({ studyData }: StudyItemProps) {
                 <div className="h-full w-30 flex flex-col items-center justify-center gap-4 border-l border-l-[#292524]/20">
 
                     <button className="rounded-full flex items-center justify-center size-6 border border-[#292524]/30"
-                        onClick={handleShowMaterials}>
+                        onClick={() => checkDoneStudy(studyData.id)}>
                         <RotateCcw className="text-green-600 size-3"
                             style={{ color: studyData.color_hex ? `${studyData.color_hex}` : '#292524' }} />
                     </button>
