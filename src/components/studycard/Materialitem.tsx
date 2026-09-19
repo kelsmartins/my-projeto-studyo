@@ -16,6 +16,10 @@ export function MaterialItem({ thisColor, studyId, thisMaterial, handleClose }: 
 
     const { deleteMaterial } = useStudyContext();
 
+    function handleDeleteMaterial(){
+        deleteMaterial(studyId, thisMaterial.id)
+    }
+
     return (
         <div className="w-full h-10 flex justify-between items-center gap-2 p-1">
             {thisMaterial.type === 'string' ?
@@ -30,8 +34,11 @@ export function MaterialItem({ thisColor, studyId, thisMaterial, handleClose }: 
                 />
                     }
             <span className="flex items-center justify-start w-full truncate text-[#292524]/70 text-sm">ola</span>
-            <button 
-                className="bg-transparent flex items-center justify-center">
+            <button
+                type="button"
+                className="bg-transparent flex items-center justify-center"
+                onClick={handleDeleteMaterial}
+            >
                 <X className="size-4 text-red-400" 
                     style={{color: thisColor}}
                 />
