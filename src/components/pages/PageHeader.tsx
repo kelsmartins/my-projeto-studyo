@@ -13,7 +13,7 @@ type PageHeaderProps = {
 
 export function PageHeader({ title, subtitle, handleShow, buttonElement, buttonText, buttonTextColor, state, elementToShow, theresButton }: PageHeaderProps) {
     return (
-        <header className="flex w-full h-15 items-center justify-between px-6 py-5 text-[#292524]">
+        <header className="flex w-[80%] mx-auto h-15 items-center justify-between text-[#292524]">
 
                 <h2 className="text-2xl font-bold tracking-tight">
                     {title}
