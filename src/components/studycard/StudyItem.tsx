@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StudyDetails } from "./StudyDetails";
+import { StudyMaterials } from "./StudyMaterials";
 import { StudyType } from "@/src/types/StudyType";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { Check, ChevronDown, Play, RotateCcw, StepBack, Trash } from "lucide-react";
@@ -10,16 +10,16 @@ type StudyItemProps = {
 
 export function StudyItem({ studyData }: StudyItemProps) {
 
-    const [showDetails, setShowDetails] = useState(false);
+    const [showMaterials, setShowMaterials] = useState(false);
     const { checkDoneStudy, deleteStudy } = useStudyContext();
 
-    function handleShowDetails() {
-        setShowDetails(!showDetails);
+    function handleShowMaterials() {
+        setShowMaterials(!showMaterials);
     }
 
     return (
         <div
-            className="w-[80%] mx-auto h-30 bg-[#F9FBFC] flex rounded-md border border-[#292524]/20"
+            className="w-[80%] mx-auto h-30 relative bg-[#F9FBFC] flex rounded-md border border-[#292524]/20"
             style={{ borderLeft: studyData.color_hex ? `4px solid ${studyData.color_hex}` : undefined }}
         >
 
@@ -32,16 +32,18 @@ export function StudyItem({ studyData }: StudyItemProps) {
                     >
                         {studyData.date}
                     </h3>
-                    <p>Enem</p>
+                    <p></p>
                 </div>
 
                 <h2 className="text-[#292524] font-bold mb-1 text-md truncate">{studyData.title}</h2>
-                <p className="text-xs font-bold mt-2 flex gap-1"
-                    style={{ color: studyData.color_hex ? `${studyData.color_hex}` : '#292524' }}>
+                
+                <button className="text-xs font-bold mt-2 flex gap-1"
+                    style={{ color: studyData.color_hex ? `${studyData.color_hex}` : '#292524' }}
+                    onClick={handleShowMaterials}>
                     <ChevronDown className="text-green-600 size-4 font-bold"
                         style={{ color: studyData.color_hex ? `${studyData.color_hex}` : '#292524' }} />
                     2 materiais
-                </p>
+                </button>
 
 
             </div>
@@ -51,7 +53,7 @@ export function StudyItem({ studyData }: StudyItemProps) {
                 <div className="h-full w-30 flex flex-col items-center justify-center gap-4 border-l border-l-[#292524]/20">
 
                     <button className="rounded-full flex items-center justify-center size-6 border border-[#292524]/30"
-                        onClick={handleShowDetails}>
+                        onClick={handleShowMaterials}>
                         <Play className="text-green-600 size-3"
                             style={{ color: studyData.color_hex ? `${studyData.color_hex}` : '#292524' }} />
                     </button>
@@ -69,7 +71,7 @@ export function StudyItem({ studyData }: StudyItemProps) {
                 <div className="h-full w-30 flex flex-col items-center justify-center gap-4 border-l border-l-[#292524]/20">
 
                     <button className="rounded-full flex items-center justify-center size-6 border border-[#292524]/30"
-                        onClick={handleShowDetails}>
+                        onClick={handleShowMaterials}>
                         <RotateCcw className="text-green-600 size-3"
                             style={{ color: studyData.color_hex ? `${studyData.color_hex}` : '#292524' }} />
                     </button>
@@ -84,7 +86,7 @@ export function StudyItem({ studyData }: StudyItemProps) {
 
             }
 
-            {showDetails && <StudyDetails handleShowDetails={handleShowDetails} studyData={studyData} />}
+            {showMaterials && <StudyMaterials handleShowDetails={handleShowMaterials} studyData={studyData} />}
 
         </div>
     )
