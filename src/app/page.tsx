@@ -28,9 +28,8 @@ export default function Home() {
       {/* <MaterialViewer /> */}
       <PageHeader title="Olá, usuário!" subtitle="Vamos continuar seus estudos?" theresButton={false} />
 
-      <ul className="flex-1 flex flex-col py-2 px-6">
-
-        <StudyItem studyData={study} />
+      <ul className="flex-1 flex flex-col">
+       
       </ul>
 
     </div>
