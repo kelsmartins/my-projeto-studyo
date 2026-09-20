@@ -15,7 +15,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 export type PdfViewerProps = {
     materialData: MaterialType;
-    handleClose: () => void;
+    handleClose?: () => void;
 };
 
 

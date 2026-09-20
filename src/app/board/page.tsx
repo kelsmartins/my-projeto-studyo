@@ -1,7 +1,7 @@
 'use client';
 import { FakeChat } from "@/src/components/chat/FakeChat";
 import { PageHeader } from "@/src/components/pages/PageHeader";
-import { StudyItem } from "@/src/components/studycard/StudyItem";
+import { StudyItem } from "@/src/components/studyitems/StudyItem";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { PlusCircle } from "lucide-react";
 import { useState } from "react";

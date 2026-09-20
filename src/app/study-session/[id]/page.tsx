@@ -2,13 +2,13 @@
 import { useEffect, useState } from 'react'
 import { useStudyContext } from '@/src/contexts/StudyContext'
 import { StudyType } from '@/src/types/StudyType';
-import { MaterialViewer } from '@/src/components/viewers/MaterialViewer';
+import { PdfViewer } from '@/src/components/viewers/PdfViewer';
 
 interface StudySessionProps {
   params: Promise<{ id: string }>;
 }
 
-export function StudySession({ params }: StudySessionProps) {
+export default function StudySession({ params }: StudySessionProps) {
   const { getStudyById } = useStudyContext();
   const [currentStudy, setCurrentStudy] = useState<StudyType | null>(null)
 
@@ -29,8 +29,10 @@ export function StudySession({ params }: StudySessionProps) {
 
   return (
     <div className="w-screen h-screen justify-between bg-green-300 flex justify-between">
-      <MaterialViewer />
-      <div className="bg-purple-400 w-[50%] h-full">...</div>
+      <div className="bg-pink-200 w-[50%] h-full overflow-hidden">
+        {/* <PdfViewer materialData={currentStudy?.material} /> */}
+      </div>
+      <div className="bg-sky-200 w-[50%] h-full">...</div>
     </div>
   )
 }

@@ -13,6 +13,10 @@ export default function NavBar() {
         { name: "Concluídos", href: "/done-studies", icon: Check }
     ];
 
+    if(pathname.includes("study-session")){
+        return 
+    }
+
     return (
         <nav className="h-[60px] w-screen shrink-0 border-r border-slate-200 p-5 text-stone-800 flex flex items-center">
             <p className="text-xs font-semibold text-stone-500">Studyo</p>
