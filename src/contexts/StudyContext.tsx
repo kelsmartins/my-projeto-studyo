@@ -2,13 +2,14 @@
 import { axios_api } from "@/src/api/axios_api";
 import { ParsedStudyType } from "@/src/types/ParsedStudyType";
 import { MaterialType, StudyType } from "@/src/types/StudyType";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState, useCallback } from "react";
 
 type StudyContextType = {
     studies: StudyType[];
     doneStudies: StudyType[];
 
     getStudies: () => void;
+    getStudyById: () => Promise<StudyType | null>
     addStudy: (newParsedStudy: ParsedStudyType) => Promise<string>;
     deleteStudy: (id: string) => Promise<string>
     deleteDoneStudies: () => Promise<string>;
@@ -41,16 +42,15 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             const res = await axios_api.get('/studies')
             const studiesFromApi = Array.isArray(res.data) ? res.data : [res.data]
 
-            const activeStudies: StudyType[] = []
-            const completedStudies: StudyType[] = []
+            const undoneStudies: StudyType[] = []
+            const doneStudies: StudyType[] = []
 
             studiesFromApi.forEach(study => {
                 if (study.done === false) {
                     activeStudies.push(study)
-                    return
+                } else {
+                    doneStudies.push(study)
                 }
-
-                completedStudies.push(study)
             })
 
             setStudies(activeStudies)
@@ -65,8 +65,15 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
         getStudies()
     }, [])
 
+    const getStudyById = useCallback(async (id: string) => {
+        const resp = await axios_api.get(`/studies/${id}`)
+        return resp.data || null
+    }, [])
+
+
     async function addStudy(newParsedStudy: ParsedStudyType) {
 
+        // gerar id para cada material se o material for do tipo string ele não tiver um id
         const materialsWithIds: MaterialType[] = newParsedStudy.material
             .filter(material => material.type !== "file")
             .map(material => ({
@@ -208,7 +215,7 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <StudyContext.Provider value={{ studies, doneStudies, getStudies, addStudy, deleteStudy, deleteDoneStudies, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
+        <StudyContext.Provider value={{ studies, doneStudies, getStudies, getStudyById, addStudy, deleteStudy, deleteDoneStudies, checkDoneStudy, deleteMaterial, parseStudy, parsedStudy, discardParsedStudy, getCurrentSelectedMaterial, currentSelectedMaterial, deleteCurrentSelectedMaterial }}>
             {children}
         </StudyContext.Provider>
     )

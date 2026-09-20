@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import { StudyMaterials } from "./StudyMaterials";
 import { StudyType } from "@/src/types/StudyType";
 import { useStudyContext } from "@/src/contexts/StudyContext";
@@ -52,11 +53,10 @@ export function StudyItem({ studyData }: StudyItemProps) {
 
                 <div className="h-full w-30 flex flex-col items-center justify-center gap-4 border-l border-l-[#292524]/20">
 
-                    <button className="rounded-full flex items-center justify-center size-6 border border-[#292524]/30"
-                        onClick={handleShowMaterials}>
-                        <Play className="text-green-600 size-3"
-                            style={{ color: studyData.color_hex ? `${studyData.color_hex}` : '#292524' }} />
-                    </button>
+                    <Link className="rounded-full flex items-center justify-center size-8"
+                        href={`/study-session/${studyData.id}`}>
+                        <Play />
+                    </Link>
 
                     <button
                         className="rounded-full flex items-center justify-center size-6 border border-[#292524]/30"
