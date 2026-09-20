@@ -9,7 +9,7 @@ type StudyContextType = {
     doneStudies: StudyType[];
 
     getStudies: () => void;
-    getStudyById: () => Promise<StudyType | null>
+    getStudyById: (id: string) => Promise<StudyType | null>
     addStudy: (newParsedStudy: ParsedStudyType) => Promise<string>;
     deleteStudy: (id: string) => Promise<string>
     deleteDoneStudies: () => Promise<string>;
@@ -47,14 +47,14 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
 
             studiesFromApi.forEach(study => {
                 if (study.done === false) {
-                    activeStudies.push(study)
+                    undoneStudies.push(study)
                 } else {
                     doneStudies.push(study)
                 }
             })
 
-            setStudies(activeStudies)
-            setDoneStudies(completedStudies)
+            setStudies(undoneStudies)
+            setDoneStudies(doneStudies)
 
         } catch (error) {
             console.error('erro ao buscar estudos:', error)
@@ -89,7 +89,6 @@ export function StudyContextProvider({ children }: { children: ReactNode }) {
             date: newParsedStudy.date,
             material: materialsWithIds,
             color_hex: newParsedStudy.color_hex,
-            color_name: newParsedStudy.color_name,
             done: false
         }
 
