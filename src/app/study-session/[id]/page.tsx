@@ -2,7 +2,10 @@
 import { useEffect, useState } from 'react'
 import { useStudyContext } from '@/src/contexts/StudyContext'
 import { StudyType } from '@/src/types/StudyType';
-import { PdfViewer } from '@/src/components/viewers/PdfViewer';
+import { PdfViewer } from '@/src/components/studysession/PdfViewer';
+import { SessionHeader } from '@/src/components/studysession/SessionHeader';
+import { MaterialArea } from '@/src/components/studysession/MaterialArea';
+import { AnnotationArea } from '@/src/components/studysession/AnnotationArea';
 
 interface StudySessionProps {
   params: Promise<{ id: string }>;
@@ -27,12 +30,14 @@ export default function StudySession({ params }: StudySessionProps) {
     loadStudy()
   }, [params, getStudyById])
 
+  if(!currentStudy) return null
+
   return (
-    <div className="w-screen h-screen justify-between bg-green-300 flex justify-between">
-      <div className="bg-pink-200 w-[50%] h-full overflow-hidden">
-        {/* <PdfViewer materialData={currentStudy?.material} /> */}
-      </div>
-      <div className="bg-sky-200 w-[50%] h-full">...</div>
+    <div className="relative w-screen h-screen justify-between bg-green-300 flex overflow-hidden">
+      <SessionHeader />
+      <MaterialArea materials={currentStudy?.material}/>
+      <AnnotationArea />
+      
     </div>
   )
 }
