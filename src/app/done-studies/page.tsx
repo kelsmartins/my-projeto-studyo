@@ -1,6 +1,6 @@
 'use client';
 import { PageHeader } from "@/src/components/pages/PageHeader";
-import { StudyItem } from "@/src/components/studycard/StudyItem";
+import { StudyItem } from "@/src/components/studyitems/StudyItem";
 import { useStudyContext } from "@/src/contexts/StudyContext";
 import { Trash2Icon, X } from "lucide-react";
 import { useState } from "react";
