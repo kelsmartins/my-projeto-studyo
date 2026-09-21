@@ -34,8 +34,8 @@ export default function StudySession({ params }: StudySessionProps) {
   if (!currentStudy) return null
 
   return (
-    <main className="h-screen flex overflow-hidden flex-col bg-green-200 overflow-hidden">
-      <SessionHeader />
+    <main className="h-screen flex overflow-hidden flex-col overflow-hidden">
+      <SessionHeader title={currentStudy.title} />
       <div className="w-full h-full overflow-hidden bg-red-200 flex overflow-hidden">
 
         <MaterialArea materials={currentStudy.material}/>
