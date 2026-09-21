@@ -1,5 +1,5 @@
 export function SessionMaterials(){
     return (
-        <aside className="h-full w-[30%] shrink-0 bg-yellow-400"></aside>
+        <div className="h-[60px] w-full bg-yellow-400"></div>
     )
 }
