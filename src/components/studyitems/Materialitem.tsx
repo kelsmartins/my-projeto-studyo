@@ -33,7 +33,7 @@ export function MaterialItem({ thisColor, studyId, thisMaterial, handleClose }: 
                     style={{color: thisColor}}
                 />
                     }
-            <span className="flex items-center justify-start w-full truncate text-[#292524]/70 text-sm">ola</span>
+            <span className="flex items-center justify-start w-full truncate text-[#292524]/70 text-sm">{thisMaterial.name}</span>
             <button
                 type="button"
                 className="bg-transparent flex items-center justify-center"
