@@ -8,9 +8,13 @@ type MaterialAreaProps = {
 
 export function MaterialArea({materials}: MaterialAreaProps){
     return (
-        <main className="h-full w-[70%] bg-blue-400 flex overflow-y-auto">
-            <SessionMaterials />
-            <PdfViewer materialData={materials[0]}/>
-        </main>
+        <div className='bg-purple-200 h-full w-[70%] flex flex-col'>
+          <SessionMaterials />
+
+          <div className='flex-1 bg-green-200 flex items-center justify-center p-10 overflow-auto'>
+            <PdfViewer materialData={materials[0]} />
+          </div>
+    
+        </div>
     )
 }
