@@ -33,11 +33,15 @@ export default function StudySession({ params }: StudySessionProps) {
   if(!currentStudy) return null
 
   return (
-    <div className="relative w-screen h-screen justify-between bg-green-300 flex overflow-hidden">
+    <div className=" w-screen h-screen justify-between bg-green-300 flex flex-col">
       <SessionHeader />
-      <MaterialArea materials={currentStudy?.material}/>
+      {/* <MaterialArea materials={currentStudy?.material}/>
       <AnnotationArea />
-      
+       */}
+       <div className="flex-1 h-full bg-red-200 overflow-hidden">
+          <MaterialArea materials={currentStudy?.material}/>
+          <AnnotationArea />
+       </div>
     </div>
   )
 }
