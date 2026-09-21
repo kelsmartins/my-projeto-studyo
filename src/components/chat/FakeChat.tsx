@@ -21,8 +21,8 @@ export function FakeChat({ handleShowFakeChat }: FakeChatProps) {
 
 
     function handleAddFiles(newFiles: FileList) {
-        const files = [...Array.from(newFiles)];
-        getCurrentSelectedMaterial(files);
+        const files = Array.from(newFiles);
+        getCurrentSelectedMaterial([...currentSelectedMaterial, ...files]);
     }
 
     function handleParse() {
@@ -33,7 +33,7 @@ export function FakeChat({ handleShowFakeChat }: FakeChatProps) {
 
 
     return (
-        <div className="w-screen h-screen bg-black/20 absolute top-0 left-0 flex justify-center items-center"
+        <div className="w-screen h-screen bg-black/20 absolute top-0 left-0 z-10 flex justify-center items-center"
         onClick={handleShowFakeChat}>
 
             <div className=" w-100 max-h-100 bg-[#F2F5F7] flex flex-col items-center justify-between p-1 rounded-md fixed top-12 right-6" 
