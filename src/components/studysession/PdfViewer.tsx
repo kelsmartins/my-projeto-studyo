@@ -28,7 +28,7 @@ export function PdfViewer({ materialData, handleClose }: PdfViewerProps) {
 
     return (
         <Document
-            className="w-full h-full bg-white rounded-lg shadow-lg overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            className="mt-70"
             file={materialData.url}
             onLoadSuccess={onDocumentLoadSuccess}>
             <Page pageNumber={pageNumber} />
