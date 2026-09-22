@@ -11,7 +11,7 @@ export function MaterialArea({materials}: MaterialAreaProps){
         <div className='bg-gray-200 h-full w-[75%] flex flex-col'>
           <SessionMaterials materials={materials}/>
 
-          <div className='flex-1 flex items-center justify-center p-10 overflow-auto'>
+          <div className='flex-1 flex items-center justify-center p-10 overflow-hidden'>
             <PdfViewer materialData={materials[0]} />
           </div>
     

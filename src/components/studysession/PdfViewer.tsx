@@ -1,253 +1,170 @@
-"use client";
+﻿"use client";
 
 import { MaterialType } from "@/src/types/StudyType";
-import { ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
-import { useState } from "react";
-import { Document, Page } from "react-pdf"
-import { pdfjs } from 'react-pdf';
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url,
-).toString();
+import { Minus, Plus, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export type PdfViewerProps = {
-    materialData: MaterialType;
-    handleClose?: () => void;
+  materialData: MaterialType;
+  handleClose?: () => void;
 };
 
 export function PdfViewer({ materialData, handleClose }: PdfViewerProps) {
-    const [numPages, setNumPages] = useState<number>(0);
-    const [pageNumber, setPageNumber] = useState<number>(1);
-    const [scale, setScale] = useState(1.0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState<number>(1.2);
+  const [loading, setLoading] = useState<boolean>(true);
 
-    // Funções para aumentar e diminuir zoom
-    const zoomIn = () => setScale(prevScale => Math.min(prevScale + 0.2, 3)); // máximo 300%
-    const zoomOut = () => setScale(prevScale => Math.max(prevScale - 0.2, 0.5)); // mínimo 50%
+  const zoomIn = () => setScale((prev) => Math.min(prev + 0.2, 2.5));
+  const zoomOut = () => setScale((prev) => Math.max(prev - 0.2, 0.6));
 
-    function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-        setNumPages(numPages);
+  useEffect(() => {
+    let isMounted = true;
+
+    async function renderPDF() {
+      if (!containerRef.current || !materialData.url) return;
+      setLoading(true);
+      containerRef.current.innerHTML = "";
+
+      try {
+        // Carrega o PDF.js e os estilos da camada de texto dinamicamente
+        // @ts-ignore
+        if (!window.pdfjsLib) {
+          // Injeta CSS da camada de texto para permitir seleção
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.css";
+          document.head.appendChild(link);
+
+          await new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+        }
+
+        // @ts-ignore
+        const pdfjs = window.pdfjsLib;
+        pdfjs.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+        const loadingTask = pdfjs.getDocument(materialData.url);
+        const pdf = await loadingTask.promise;
+
+        if (!isMounted) return;
+
+        // Fator de Nitidez (Device Pixel Ratio para telas Retina/Full HD)
+        const outputScale = window.devicePixelRatio || 1;
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          const page = await pdf.getPage(pageNum);
+          const viewport = page.getViewport({ scale });
+
+          // Container da Página
+          const pageWrapper = document.createElement("div");
+          pageWrapper.className = "relative shadow-lg rounded bg-white my-4 overflow-hidden border border-stone-200 select-text";
+          pageWrapper.style.width = `${viewport.width}px`;
+          pageWrapper.style.height = `${viewport.height}px`;
+
+          // 1. CANVAS COM ALTA RESOLUÇÃO (HD)
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+
+          canvas.width = Math.floor(viewport.width * outputScale);
+          canvas.height = Math.floor(viewport.height * outputScale);
+          canvas.style.width = `${viewport.width}px`;
+          canvas.style.height = `${viewport.height}px`;
+
+          pageWrapper.appendChild(canvas);
+
+          // 2. CAMADA DE TEXTO SELECIONÁVEL (Text Layer)
+          const textLayerDiv = document.createElement("div");
+          textLayerDiv.className = "textLayer absolute inset-0 leading-none";
+          pageWrapper.appendChild(textLayerDiv);
+
+          containerRef.current?.appendChild(pageWrapper);
+
+          if (context) {
+            // Renderiza o gráfico em HD
+            const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : undefined;
+            await page.render({
+              canvasContext: context,
+              viewport: viewport,
+              transform: transform,
+            }).promise;
+
+            // Renderiza a camada de texto transparente sobre a imagem
+            const textContent = await page.getTextContent();
+            pdfjs.renderTextLayer({
+              textContentSource: textContent,
+              container: textLayerDiv,
+              viewport: viewport,
+              textDivs: [],
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Erro ao renderizar PDF HD:", error);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
     }
 
-    return (
-        <Document
-            className="mt-"
-            file={materialData.url}
-            onLoadSuccess={onDocumentLoadSuccess}>
-            <Page pageNumber={pageNumber} scale={scale}/>
+    renderPDF();
 
-            <PageActions pageNumber={pageNumber} setPageNumber={setPageNumber} numPages={numPages} />
+    return () => {
+      isMounted = false;
+    };
+  }, [materialData.url, scale]);
 
-            <DocumentScale scale={scale} zoomIn={zoomIn} zoomOut={zoomOut}/>
+  return (
+    <div className="relative flex flex-col w-full h-screen bg-stone-100 overflow-hidden">
+      {/* BARRA SUPERIOR CUSTOMIZADA */}
+      <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-stone-200 z-20 shadow-sm">
+        <span className="text-sm font-semibold text-stone-700 truncate">
+          {materialData.name}
+        </span>
 
-        </Document>
-    )
+        {handleClose && (
+          <button
+            onClick={handleClose}
+            className="p-1.5 text-stone-500 hover:bg-stone-100 rounded-full transition-colors"
+          >
+            <X className="size-5" />
+          </button>
+        )}
+      </div>
+
+      {/* ÁREA DE SCROLL */}
+      <div className="flex-1 w-full overflow-y-auto p-6 flex flex-col items-center">
+        {loading && (
+          <div className="my-10 text-stone-500 text-sm font-medium animate-pulse">
+            Carregando documento em alta definição...
+          </div>
+        )}
+        <div ref={containerRef} className="flex flex-col items-center" />
+      </div>
+
+      {/* CONTROLE DE ZOOM */}
+      <div className="fixed right-8 bottom-8 bg-white/95 backdrop-blur-md border border-stone-200 rounded-full p-1.5 shadow-xl flex items-center gap-2 z-30">
+        <button
+          onClick={zoomOut}
+          className="p-2 hover:bg-stone-100 rounded-full text-stone-600 transition-colors"
+        >
+          <Minus className="size-4" />
+        </button>
+
+        <span className="text-xs font-semibold text-stone-600 w-12 text-center select-none">
+          {Math.round(scale * 100)}%
+        </span>
+
+        <button
+          onClick={zoomIn}
+          className="p-2 hover:bg-stone-100 rounded-full text-stone-600 transition-colors"
+        >
+          <Plus className="size-4" />
+        </button>
+      </div>
+    </div>
+  );
 }
-
-
-
-
-
-
-
-
-type PageActionsProps = {
-    pageNumber: number;
-    setPageNumber: (num: number) => void;
-    numPages?: number;
-}
-
-export function PageActions({ pageNumber, setPageNumber, numPages }: PageActionsProps) {
-    const safeNumPages = numPages ?? 1;
-    return (
-        <div
-            className="w-60 h-12 absolute bottom-4 left-[29%] text-white text-sm bg-white rounded-full border border-[#292524]/20 shadow-lg flex items-center justify-between gap-2 p-4"
-            onClick={(e) => e.stopPropagation()}>
-
-            <button
-                className="flex items-center justify-between  text-[#292524]/70"
-                onClick={() => {
-                    if (pageNumber > 1) {
-                        setPageNumber(pageNumber - 1)
-                    }
-                }}>
-                <ChevronLeft className="size-5"
-                />
-                <span className="text-sm">Anterior</span>
-            </button>
-
-            <button
-                className="flex items-center justify-between text-[#292524]/60 "
-                onClick={() => {
-                    if (pageNumber < (numPages || 1)) {
-                        setPageNumber(pageNumber + 1)
-                    }
-                }}>
-                <span className="text-sm">Próxima</span>
-                <ChevronRight className="size-5"
-                />
-            </button>
-        </div>
-    )
-}
-
-type DocumentScaleProps = {
-    zoomOut: () => void;
-    zoomIn: () => void;
-    scale: number;
-}
-
-export function DocumentScale({ zoomOut, zoomIn, scale }: DocumentScaleProps) {
-    return (
-        <div className="fixed right-110 bottom-6 bg-white p-2 flex rounded-full text-gray-600">
-            
-            <button onClick={zoomOut} className="p-1 flex items-center justify-center"><Minus className="size-3"/></button>
-            <span className="text-xs flex items-center justify-center">{(scale * 100).toFixed(0)}%</span>
-            <button onClick={zoomIn} className="p-1 flex items-center justify-center"><Plus className="size-3"/></button>
-            
-        </div>
-    )
-}
-
-// "use client";
-
-// import { MaterialType } from "@/src/types/StudyType";
-// import { ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
-// import { useEffect, useRef, useState } from "react";
-// import { Document, Page } from "react-pdf";
-// import { pdfjs } from "react-pdf";
-// import "react-pdf/dist/Page/AnnotationLayer.css";
-// import "react-pdf/dist/Page/TextLayer.css";
-
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   "pdfjs-dist/build/pdf.worker.min.mjs",
-//   import.meta.url,
-// ).toString();
-
-// export type PdfViewerProps = {
-//   materialData: MaterialType;
-//   handleClose?: () => void;
-// };
-
-// export function PdfViewer({ materialData, handleClose }: PdfViewerProps) {
-//   const [numPages, setNumPages] = useState<number>(0);
-//   const [pageNumber, setPageNumber] = useState<number>(1);
-//   const [scale, setScale] = useState(1.0);
-//   const pageRefs = useRef<Record<number, HTMLDivElement | null>>({});
-
-//   const zoomIn = () => setScale((prevScale) => Math.min(prevScale + 0.2, 3));
-//   const zoomOut = () => setScale((prevScale) => Math.max(prevScale - 0.2, 0.5));
-
-//   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-//     setNumPages(numPages);
-//   }
-
-//   useEffect(() => {
-//     const pageElement = pageRefs.current[pageNumber];
-//     if (pageElement) {
-//       pageElement.scrollIntoView({ behavior: "smooth", block: "start" });
-//     }
-//   }, [pageNumber, numPages]);
-
-//   return (
-//     <div className="relative h-[calc(100vh-6rem)] w-full overflow-hidden bg-[#f5f5f4]">
-//       <div className="mx-auto h-full w-full max-w-[980px] overflow-y-auto px-4 pb-28 pt-8">
-//         <Document
-//           file={materialData.url}
-//           onLoadSuccess={onDocumentLoadSuccess}
-//           className="flex flex-col items-center gap-6"
-//           loading={<div className="py-8 text-center text-sm text-stone-500">Carregando PDF...</div>}
-//         >
-//           {Array.from({ length: numPages }, (_, index) => {
-//             const currentPage = index + 1;
-
-//             return (
-//               <div
-//                 key={currentPage}
-//                 ref={(el) => {
-//                   pageRefs.current[currentPage] = el;
-//                 }}
-//                 className={`flex w-full justify-center rounded-md ${
-//                   currentPage === pageNumber ? "ring-2 ring-[#292524]/20" : ""
-//                 }`}
-//               >
-//                 <Page
-//                   pageNumber={currentPage}
-//                   scale={scale}
-//                   renderTextLayer={true}
-//                   renderAnnotationLayer={true}
-//                   className="shadow-sm"
-//                 />
-//               </div>
-//             );
-//           })}
-//         </Document>
-//       </div>
-
-//       <PageActions
-//         pageNumber={pageNumber}
-//         setPageNumber={setPageNumber}
-//         numPages={numPages}
-//       />
-
-//       <DocumentScale scale={scale} zoomIn={zoomIn} zoomOut={zoomOut} />
-//     </div>
-//   );
-// }
-
-// type PageActionsProps = {
-//   pageNumber: number;
-//   setPageNumber: (num: number) => void;
-//   numPages?: number;
-// };
-
-// export function PageActions({ pageNumber, setPageNumber, numPages }: PageActionsProps) {
-//   const maxPageNumber = Math.max(numPages ?? 1, 1);
-
-//   return (
-//     <div
-//       className="absolute bottom-4 left-1/2 z-20 flex w-72 -translate-x-1/2 items-center justify-between gap-2 rounded-full border border-[#292524]/20 bg-white p-3 text-sm shadow-lg"
-//       onClick={(e) => e.stopPropagation()}
-//     >
-//       <button
-//         className="flex items-center gap-1 text-[#292524]/70 disabled:cursor-not-allowed disabled:opacity-50"
-//         onClick={() => setPageNumber(Math.max(1, pageNumber - 1))}
-//         disabled={pageNumber <= 1}
-//       >
-//         <ChevronLeft className="size-5" />
-//         <span className="text-sm">Anterior</span>
-//       </button>
-
-//       <button
-//         className="flex items-center gap-1 text-[#292524]/70 disabled:cursor-not-allowed disabled:opacity-50"
-//         onClick={() => setPageNumber(Math.min(maxPageNumber, pageNumber + 1))}
-//         disabled={pageNumber >= maxPageNumber}
-//       >
-//         <span className="text-sm">Próxima</span>
-//         <ChevronRight className="size-5" />
-//       </button>
-//     </div>
-//   );
-// }
-
-// type DocumentScaleProps = {
-//   zoomOut: () => void;
-//   zoomIn: () => void;
-//   scale: number;
-// };
-
-// export function DocumentScale({ zoomOut, zoomIn, scale }: DocumentScaleProps) {
-//   return (
-//     <div className="fixed bottom-6 right-8 z-20 flex items-center gap-2 rounded-full bg-white p-2 text-gray-600 shadow-lg">
-//       <button onClick={zoomOut} className="flex items-center justify-center p-1">
-//         <Minus className="size-3" />
-//       </button>
-//       <span className="flex items-center justify-center text-xs">{(scale * 100).toFixed(0)}%</span>
-//       <button onClick={zoomIn} className="flex items-center justify-center p-1">
-//         <Plus className="size-3" />
-//       </button>
-//     </div>
-//   );
-// }
