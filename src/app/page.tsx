@@ -1,10 +1,6 @@
 'use client'
 
-import { MaterialViewer } from "../components/viewers/MaterialViewer";
 import { PageHeader } from '../components/pages/PageHeader'
-import { StudyItem } from "../components/studycard/StudyItem";
-import { StudyType } from "../types/StudyType";
-
 
 export default function Home() {
 
