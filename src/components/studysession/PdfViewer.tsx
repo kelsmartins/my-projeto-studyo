@@ -146,7 +146,7 @@ export function PdfControls({
             className="
                 fixed
                 bottom-6
-                left-[36%]
+                left-[30%]
                 -translate-x-1/2
 
                 h-11

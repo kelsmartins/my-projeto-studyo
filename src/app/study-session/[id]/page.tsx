@@ -36,7 +36,7 @@ export default function StudySession({ params }: StudySessionProps) {
   return (
     <main className="h-screen flex overflow-hidden flex-col overflow-hidden">
       <SessionHeader title={currentStudy.title} />
-      <div className="w-full h-full overflow-hidden bg-red-200 flex overflow-hidden">
+      <div className="w-full h-full overflow-hidden flex overflow-hidden">
 
         <MaterialArea materials={currentStudy.material}/>
         <AnnotationArea />
