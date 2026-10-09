@@ -6,7 +6,7 @@ type SessionMaterialsProps={
 
 export function SessionMaterials({materials}: SessionMaterialsProps){
     return (
-        <ul className="h-[50px] w-full border-b border-gray-300 p-2 flex items-center gap-2">
+        <ul className="h-[50px] w-full border-b border-gray-300 p-2 flex items-center gap-2 overflow-x-auto">
             {materials?.map((material, index) => (
                 <SessionMaterial key={index} material={material} />
             ))}
@@ -20,7 +20,7 @@ type SessionMaterialProps = {
 
 export function SessionMaterial({material}: SessionMaterialProps){
     return (
-        <li className="flex justify-between items-center w-30 h-full bg-red-200 overflow-x-auto p-2 rounded-md">
+        <li className="flex justify-between items-center w-30 h-full bg-white overflow-x-auto p-2 rounded-md text-black/70">
             <span className="text-xs truncate">{material.name}</span>
         </li>
     )
