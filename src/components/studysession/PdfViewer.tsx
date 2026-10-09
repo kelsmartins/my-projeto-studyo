@@ -68,7 +68,7 @@ export function PdfViewer({
 
 
     return (
-        <>
+        <div className="flex flex-col items-center justify-center w-full h-full">
             {/* ==========================================
                 PDF
             ========================================== */}
@@ -103,7 +103,7 @@ export function PdfViewer({
                 zoomIn={zoomIn}
                 zoomOut={zoomOut}
             />
-        </>
+        </div>
     );
 }
 
@@ -146,7 +146,7 @@ export function PdfControls({
             className="
                 fixed
                 bottom-6
-                left-[40%]
+                left-[36%]
                 -translate-x-1/2
 
                 h-11
